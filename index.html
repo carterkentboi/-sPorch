@@ -1,0 +1,1529 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Turkey's Porch</title>
+<style>
+  :root{--orange:#e0641f;--gold:#f2b84b;--bg:#1c1b1e;--panel:#2b1712;--ink:#f3e6d0}
+  *{box-sizing:border-box}
+  html,body{height:100%;margin:0}
+  body{background:linear-gradient(180deg,#2a2a2e 0%,#3b2a28 22%,#6d2b14 52%,#b4501b 78%,#e3a238 100%) fixed;color:var(--ink);font-family:Georgia,'Times New Roman',serif;display:flex;flex-direction:column;max-width:640px;margin:0 auto;overflow:hidden}
+  #gate{position:fixed;inset:0;background:radial-gradient(circle at 50% 38%,#8a3516 0%,#2e1a15 52%,#0c0908 100%);z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:20px}
+  #gate img{max-height:55vh;max-width:90%;border-radius:8px}
+  #gate button{margin-top:22px;font:inherit;font-size:1.3rem;padding:14px 28px;background:var(--orange);color:#000;border:0;border-radius:10px;cursor:pointer;letter-spacing:1px}
+  #gate p{opacity:.7;font-size:.9rem;max-width:320px}
+  header{display:flex;align-items:center;gap:12px;padding:10px 14px;border-bottom:1px solid #2a2118;background:#1b1210d9}
+  header img{width:54px;height:54px;object-fit:cover;object-position:50% 20%;border-radius:50%;border:2px solid var(--orange);box-shadow:0 0 14px #e0641f88;animation:pulse 3s infinite}
+  @keyframes pulse{50%{box-shadow:0 0 26px #e0641fcc}}
+  header h1{font-size:1.05rem;margin:0;color:var(--orange);letter-spacing:1px;flex:1}
+  header button{background:none;border:1px solid #3a2d20;color:var(--ink);border-radius:8px;padding:6px 9px;font-size:1.1rem;cursor:pointer}
+  #log{flex:1;overflow-y:auto;padding:14px;display:flex;flex-direction:column;gap:10px;-webkit-overflow-scrolling:touch}
+  .m{max-width:90%;padding:10px 13px;border-radius:12px;line-height:1.5;white-space:pre-wrap;animation:in .3s}
+  @keyframes in{from{opacity:0;transform:translateY(6px)}}
+  .bot{background:linear-gradient(145deg,#4a2218,#26120e);border:1px solid #7a4128;box-shadow:inset 0 1px 0 #ffffff1c,inset 0 -10px 20px #00000066,0 3px 10px #0007;align-self:flex-start}
+  .me{background:linear-gradient(145deg,#a24516,#6a2a0d);align-self:flex-end;border:1px solid #c9702f;box-shadow:inset 0 1px 0 #ffffff26,inset 0 -10px 20px #00000055,0 3px 10px #0006}
+  .doll{background:#0d1210;border-color:#3b5547;color:#bfd8c8;font-style:italic}
+  .shriek{color:#ff3b3b;font-size:1.5rem;font-weight:bold;letter-spacing:2px;word-break:break-all}
+  .choices{display:flex;flex-direction:column;gap:8px;align-self:flex-start;max-width:90%}
+  .choices button{text-align:left;background:#1d130b;color:var(--orange);border:1px solid #6b3a14;border-radius:10px;padding:10px 12px;font:inherit;font-size:.95rem;cursor:pointer}
+  .choices button:disabled{opacity:.4;cursor:default}
+  #chips{display:flex;gap:6px;flex-wrap:wrap;padding:6px 14px}
+  #chips button{background:#1a1410;color:var(--orange);border:1px solid #4a2c14;border-radius:999px;padding:6px 12px;font:inherit;font-size:.85rem;cursor:pointer}
+  #f{display:flex;gap:8px;padding:10px 14px 16px;border-top:1px solid #2a2118}
+  #q{flex:1;min-width:0;background:#1c1210;color:var(--ink);border:1px solid #3a2d20;border-radius:10px;padding:12px;font:inherit;font-size:16px}
+  #send{background:var(--orange);color:#000;border:0;border-radius:10px;padding:0 18px;font:inherit;font-weight:bold;cursor:pointer}
+  #mic{background:#1a1410;border:1px solid #4a2c14;border-radius:10px;font-size:1.25rem;padding:0 13px;cursor:pointer;color:var(--ink)}
+  #mic.armed{border-color:#e33;background:#2a1010}
+  #mic.live{animation:micpulse 1s infinite}
+  @keyframes micpulse{50%{box-shadow:0 0 14px #ff3b3b;background:#5b1111}}
+  .tk-big{filter:drop-shadow(0 0 24px #e0641f66);animation:bob 4s ease-in-out infinite}
+  @keyframes bob{50%{transform:translateY(-7px)}}
+  .hd{border-radius:50%;border:2px solid var(--orange);background:radial-gradient(circle at 50% 40%,#5a2a1a,#1a100d);box-shadow:0 0 14px #e0641f88;animation:pulse 3s infinite;flex:none}
+  #noir{position:fixed;inset:0;z-index:4;pointer-events:none;background:radial-gradient(ellipse at 50% 42%,transparent 48%,#000000b0 100%)}
+  #grain{position:fixed;inset:0;z-index:4;pointer-events:none;opacity:.09;mix-blend-mode:overlay;background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>")}
+  #colorModal{position:fixed;inset:0;z-index:20;background:#000000d0;display:none;align-items:center;justify-content:center}
+  .cbox{background:#fff7e8;color:#2a1a14;border-radius:14px;padding:10px;width:min(94vw,420px);max-height:96vh;overflow:auto}
+  #cStage svg{width:100%;height:auto;max-height:54vh;display:block;touch-action:manipulation}
+  .f{cursor:pointer;stroke:#2a1a14;stroke-width:2.5;fill:#fff}
+  .x{pointer-events:none}
+  #cPal{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:10px 0}
+  .sw{width:34px;height:34px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 1px #0006;cursor:pointer;padding:0}
+  .sw.on{box-shadow:0 0 0 3px #e0641f}
+  .cbar{display:flex;gap:8px;margin:4px 0}
+  .cbar button{flex:1;padding:9px 6px;border-radius:8px;border:1px solid #b9906a;background:#f3dfc2;color:#2a1a14;font:inherit;font-size:.78rem;cursor:pointer}
+  .cbar button.on{background:#e0641f;color:#fff;border-color:#e0641f}
+  /* haunted effects */
+  #spiral{position:fixed;inset:0;z-index:5;pointer-events:none;opacity:0;transition:opacity 1.5s;background:repeating-conic-gradient(#000 0 15deg,#e0641f 15deg 30deg);mix-blend-mode:overlay}
+  #spiral.on{opacity:.55;animation:spin 3s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg) scale(1.6)}}
+  #dark{position:fixed;inset:0;z-index:6;background:#000;opacity:0;pointer-events:none;transition:opacity .6s;display:flex;align-items:center;justify-content:center;font-size:4rem}
+  #dark.on{opacity:1}
+  #flash{position:fixed;inset:0;z-index:7;background:#b00;opacity:0;pointer-events:none}
+  #flash.on{animation:fl .25s 4}
+  @keyframes fl{50%{opacity:.7}}
+  body.shake{animation:shk .08s infinite}
+  @keyframes shk{0%{transform:translate(4px,2px)}25%{transform:translate(-5px,-3px)}50%{transform:translate(3px,-4px)}75%{transform:translate(-4px,3px)}}
+  body.flicker{animation:flick 2.5s}
+  @keyframes flick{0%,100%{opacity:1}8%{opacity:.05}16%{opacity:1}30%{opacity:.1}45%{opacity:.9}60%{opacity:.02}75%{opacity:1}85%{opacity:.2}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><linearGradient id="gf" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#5a1f0e"/><stop offset=".55" stop-color="#c4561b"/><stop offset="1" stop-color="#f2b84b"/></linearGradient><linearGradient id="gf2" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#3b1a10"/><stop offset="1" stop-color="#8a3a18"/></linearGradient><linearGradient id="gb" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#8a4a2c"/><stop offset="1" stop-color="#3b1a10"/></linearGradient><radialGradient id="gh" cx=".4" cy=".35" r=".8"><stop offset="0" stop-color="#c0705a"/><stop offset="1" stop-color="#5c2418"/></radialGradient><symbol id="tk" viewBox="0 0 200 200"><g stroke="#2a0f08" stroke-width="1.5"><g transform="rotate(-78 100 128)"><ellipse cx="100" cy="70" rx="15" ry="40" fill="url(#gf)"/><ellipse cx="100" cy="68" rx="5" ry="26" fill="#f2b84b" fill-opacity=".30" stroke="none"/></g><g transform="rotate(-52 100 128)"><ellipse cx="100" cy="70" rx="15" ry="40" fill="url(#gf)"/><ellipse cx="100" cy="68" rx="5" ry="26" fill="#f2b84b" fill-opacity=".30" stroke="none"/></g><g transform="rotate(-26 100 128)"><ellipse cx="100" cy="70" rx="15" ry="40" fill="url(#gf)"/><ellipse cx="100" cy="68" rx="5" ry="26" fill="#f2b84b" fill-opacity=".30" stroke="none"/></g><g transform="rotate(0 100 128)"><ellipse cx="100" cy="70" rx="15" ry="40" fill="url(#gf)"/><ellipse cx="100" cy="68" rx="5" ry="26" fill="#f2b84b" fill-opacity=".30" stroke="none"/></g><g transform="rotate(26 100 128)"><ellipse cx="100" cy="70" rx="15" ry="40" fill="url(#gf)"/><ellipse cx="100" cy="68" rx="5" ry="26" fill="#f2b84b" fill-opacity=".30" stroke="none"/></g><g transform="rotate(52 100 128)"><ellipse cx="100" cy="70" rx="15" ry="40" fill="url(#gf)"/><ellipse cx="100" cy="68" rx="5" ry="26" fill="#f2b84b" fill-opacity=".30" stroke="none"/></g><g transform="rotate(78 100 128)"><ellipse cx="100" cy="70" rx="15" ry="40" fill="url(#gf)"/><ellipse cx="100" cy="68" rx="5" ry="26" fill="#f2b84b" fill-opacity=".30" stroke="none"/></g><g transform="rotate(-65 100 128)"><ellipse cx="100" cy="80" rx="13" ry="30" fill="url(#gf2)"/></g><g transform="rotate(-39 100 128)"><ellipse cx="100" cy="80" rx="13" ry="30" fill="url(#gf2)"/></g><g transform="rotate(-13 100 128)"><ellipse cx="100" cy="80" rx="13" ry="30" fill="url(#gf2)"/></g><g transform="rotate(13 100 128)"><ellipse cx="100" cy="80" rx="13" ry="30" fill="url(#gf2)"/></g><g transform="rotate(39 100 128)"><ellipse cx="100" cy="80" rx="13" ry="30" fill="url(#gf2)"/></g><g transform="rotate(65 100 128)"><ellipse cx="100" cy="80" rx="13" ry="30" fill="url(#gf2)"/></g><ellipse cx="100" cy="134" rx="38" ry="40" fill="url(#gb)"/><path d="M70 128 q30 -14 58 0 q-8 28 -30 30 q-26 -2 -28 -30z" fill="#6b3017"/><path d="M80 134 q18 8 38 0 M82 144 q16 7 34 0" fill="none" stroke="#f2b84b" stroke-opacity=".5"/><ellipse cx="100" cy="104" rx="11" ry="18" fill="url(#gh)"/><circle cx="100" cy="86" r="17" fill="url(#gh)"/><path d="M94 90 L106 90 L100 101 Z" fill="#f2b84b"/><ellipse cx="100" cy="111" rx="4.5" ry="9" fill="#b3261e"/><path d="M104 80 q7 6 2 14" fill="none" stroke="#b3261e" stroke-width="3" stroke-linecap="round"/><circle cx="92" cy="82" r="3" fill="#f6e7c8"/><circle cx="108" cy="82" r="3" fill="#f6e7c8"/><circle cx="92.6" cy="82.4" r="1.4" fill="#1a0a06" stroke="none"/><circle cx="108.6" cy="82.4" r="1.4" fill="#1a0a06" stroke="none"/></g><path d="M88 170 l0 8 M88 178 l-8 8 M88 178 l0 9 M88 178 l8 8 M112 170 l0 8 M112 178 l-8 8 M112 178 l0 9 M112 178 l8 8" stroke="#f2b84b" stroke-width="3" stroke-linecap="round" fill="none"/></symbol></defs></svg>
+
+<div id="gate">
+  <svg class="tk-big" viewBox="0 0 200 200" width="260" height="260" role="img" aria-label="A velvet turkey"><use href="#tk" xlink:href="#tk" width="200" height="200"/></svg>
+  <p>Sound on. He will talk out loud and there is music. Headphones recommended.</p>
+  <button id="enter" type="button">Come sit on the porch</button>
+</div>
+
+<div id="spiral"></div><div id="dark">👀</div><div id="flash"></div><div id="noir"></div><div id="grain"></div>
+<div id="colorModal"><div class="cbox">
+  <div class="cbar"><button id="pgPilgrim" type="button">Pilgrim</button><button id="pgHero" type="button">Captain Gobble</button><button id="pgSearch" type="button">Word Search</button><button id="cClose" type="button">Close</button></div>
+  <div id="cStage"></div>
+  <div id="cPal"></div>
+  <div class="cbar"><button id="cClear" type="button">Clear</button><button id="cSave" type="button">Save picture</button></div>
+</div></div>
+
+<header>
+  <svg class="hd" viewBox="0 0 200 200" width="54" height="54" aria-hidden="true"><use href="#tk" xlink:href="#tk" width="200" height="200"/></svg>
+  <h1 id="title">TURKEY'S PORCH</h1>
+  <button id="musicBtn" type="button" title="Music">🎵</button>
+  <button id="voiceBtn" type="button" title="Voice">🔊</button>
+</header>
+
+<div id="log"></div>
+<div id="chips"></div>
+<form id="f" action="#"><input id="q" autocomplete="off" placeholder="Talk to the Turkey..."><button id="mic" type="button" title="Talk to me">🎤</button><button id="send" type="submit">Send</button></form>
+
+<script>
+/* =====================================================
+   STORIES: choose-your-own-adventure.
+   Node ids: "" (start) -> "a"/"b" -> "aa","ab","ba","bb" (endings)
+   A node with A/B is a choice. A node with only x is an ending.
+   ===================================================== */
+var STORIES = [
+
+{t:"The Word Search", k:["columbus","word","wordsearch","search","elementary","school","nostalgia","rudolph","reindeer","gobble","indian","cornucopia","maize","hominy","bloodline","alive","sacred","unite","pilgrim","pylgrim","tobacco","colony","freedom","united","jesus","truth","church","temple"], n:{
+"":{x:`The teacher hands out a word search, and it is the best part of your whole week. The windows in that old classroom are tall and wide open, and a cool breeze comes through all of them at once, smelling like cut grass and pencil shavings and the very start of fall.
+
+You are nine. Somewhere outside a mower hums and the playground is full of happy noise. In your hand is a fat yellow pencil, perfectly sharp.
+
+The page is about Columbus, and you know now that there was more to that story than a worksheet could ever say. You're sorry for that part, truly. But this memory isn't about him. It's about the breeze, and the circles, and the feeling of being exactly where you belong.
+
+All that's left is to start.`,
+A:`Circle the words with your whole hand, one by one`,B:`Flip the page over and draw Rudolph first`},
+a:{x:`You find SAIL first, running sideways, and you swing your pencil around it in a big, loopy circle with your whole arm. Then OCEAN. Then SHIP, hiding backward in the corner. Then COLUMBUS, stretched across the whole middle of the page, and right beside it, tucked in sideways, GOBBLE, which makes you giggle out loud.
+
+Then two more, INDIAN and EAST INDIAN. They were on the list because Columbus believed he had reached the Indies, a mix-up that gave the people who really lived there a name that was never theirs. You circle them carefully, and you are quietly sorry about that, and you keep going.
+
+Then a whole harvest comes tumbling down the right-hand side: CORNUCOPIA, the overflowing basket of the autumn table, and MAIZE and HOMINY, foods the peoples of this land grew and cooked long before any ship arrived. You circle each one slowly, like you are saying thank you with your pencil.
+
+And last, small and slanted through the middle of the page, BLOODLINE, which makes you think of everyone who came before you and handed down the knack of sitting by an open window with a pencil and being happy.
+
+Three more words wait along the bottom edge, in a row, as if the page saved them for last: ALIVE, SACRED, and UNITE. You circle those last and slowest, and for a second the whole room feels exactly like those words.
+
+And three last ones, hiding in the corners: MINE, EARTH, and FIRE. You circle MINE with a little grin, because for this one afternoon, the window, the breeze, and the pencil all feel like yours. EARTH and FIRE you circle gently, the way you would warm your hands.
+
+Then, in a soft little cluster near the middle, the last three: SAFE, SANCTUARY, and SHARING. You realize that is exactly what this room is. A safe place, a sanctuary, where you share your crayons and your giggles and your best ideas. You circle them with the biggest, roundest loops of the whole page.
+
+One more is walking slowly along the very bottom edge, all by itself: PILGRIM. You circle it last, a little wobbly, like someone who has traveled a long way to sit in this exact seat by this exact window.
+
+Then the page gets a little more grown-up, with seven more words scattered through the grid: TOBACCO, VOLUME, COLONY, VIRUS, FREEDOM, FOUGHT, and the tiny, easy-to-miss FOR. You circle COLONY and TOBACCO slowly, because you are starting to understand how big the story behind this page really was. You circle VIRUS quietly, for all the sicknesses the ships carried that hurt people who had never met them. You find VOLUME right where it belongs, a whole book of it. And you circle FOUGHT, FOR, FREEDOM in a row, all three, one after another, like the sentence the page had been trying to say all along.
+
+Two last words sit side by side at the very bottom: UNITED, and the tiny word IT, which you almost miss. You circle them both. And right at the start of the very first row, where it belongs, you finally spot FRONT. Then you go back and draw a second circle around SAFE, because it was worth it.
+
+Then the page turns tender, and a few of the words feel bigger than the others: TRUTH, GOD, CHURCH, and TEMPLE, standing together like a little neighborhood. You circle each one with care.
+
+And then you start finding JESUS. He is hiding everywhere, in the corners, down the margins, upside down, backward, slanting across the middle. You count out loud as you circle. Ten. Twenty. Thirty. Thirty-one. Thirty-two. All thirty-two, every single one found.
+
+Next come HEAD and EARS, tucked close together, which makes you smile, because the teacher is always telling the class to use both when you listen. And finally, stretched all the way across the very bottom row in one long unbroken line, the biggest word of all: THEWORDSEARCHISMINE.
+
+You circle the whole line in one sweep, edge to edge. The word search is mine.
+
+Then the page gets playful, like a puzzle board with all the spaces squeezed out on purpose: EYES, SPEAK, MOUTH, then ALTOGETHER, a tiny TOO, and one long proud line that reads ASINONEWHOLEWORDONPURPOSE, because that is the whole game. PUZZLE and PIECES lie side by side. HEARTSKEEPBEATING runs down the page in one long column, and you circle it with your free hand over your own chest, feeling it. Near it sit ONEWORD, AND, BOTH, and right beside BOTH, spelled exactly the way you like it, BOLTH. You circle those too.
+
+Then come the names, the ones that matter most: TIGER, GARRETTE, and ORION, each circled slowly, like waving hello to someone you love. And LOIS, hiding all over the page, thirty-seven times, in every direction. You count them out loud as you go, one for each, all the way up to thirty-seven, and not one of them gets away.
+
+And in the exact center of the page, one time only, in big capital letters, sits a single name: CLARK. You do not have to hunt for that one. You circle it last, slowly, because the middle of the page is where it was always waiting.
+
+Last of all, down in the margin, in your best neat handwriting, two small words that feel like a promise: PEACE and GRIT. And underneath them, a line the teacher wrote on the board once, which you have never forgotten: Cheating is always very wrong. God is never wrong.
+
+Every circle makes that soft scratching sound, like a cricket in a notebook, and the breeze lifts your hair every time you finish one.
+
+Nobody is rushing you. The clock ticks. The teacher hums at her desk. And then, in the last corner, a word that wasn't on the list at all, running diagonally from one side to the other: GRATEFUL.
+
+You finish before almost everyone. The teacher stops at your desk, looks at your page full of perfect circles, and smiles. "Wonderful," she says. "Now you may draw on the back, if you like."`,
+A:`Draw Rudolph`,B:`Draw every rabbit you ever imagined seeing`},
+b:{x:`You flip the paper over because you've been waiting all morning for this. The back is a wide white field of possibility.
+
+You draw the antlers first, big and proud and branching. Then the long graceful legs, the fur, the kind brown eye. You draw with your tongue stuck out the way you do when you're concentrating. The breeze comes through the windows and flutters the corner of the page, as if the whole room is holding its breath to see what you'll do.
+
+This isn't a doodle. This is a reindeer. A real one. It might be the single best reindeer anyone has ever drawn.`,
+A:`Press hard with the red crayon and give him a glowing nose`,B:`Carry it up to the teacher's desk`},
+aa:{x:`You draw Rudolph with antlers like a little forest and eyes that look straight at you. You find the red crayon and press down hard, round and round, until his nose glows right off the page.
+
+You hold it up to the window, and the light shines through the paper, and it's perfect.
+
+The teacher comes over. She looks at it for a long moment. Then she says, quietly, so that only you can hear, "This is the best reindeer I have ever seen." She gives you your honor, right there in front of the class, a gold star and a handshake, and she takes your drawing to the door and tapes it up in the very center.
+
+It is the only one she hangs. All day long you walk past it. You are so, so proud. And when the bell rings, you run all the way home, because your dogs are waiting at the door, tails going, and you tell them everything.`},
+ab:{x:`You draw a rabbit. Then another. Then, because you can't stop, a whole field of them. Every rabbit you ever imagined seeing in the grass at dusk, in the garden, under the porch, one wearing a tiny hat, one asleep in a teacup, one that's probably a cloud.
+
+You fill the entire page. The teacher stops by and starts laughing, a big warm laugh, and the kids around you lean over to look, and suddenly the whole row is drawing rabbits too.
+
+At the end of the day she tapes your page up on the classroom door, and when you get home your dogs jump up to greet you, and you show them the rabbits with great ceremony. They're very impressed. They have always believed in you.
+
+Happy November the 1st. Halloween was awesome.`},
+ba:{x:`You press down so hard with the red crayon that the page glows through to the front. Rudolph's nose is round and bright and wonderful, and he is looking at you like he knows he's the best.
+
+Kids drift over to peek. Someone whispers, "How did you do that?" You shrug, because you don't know. Your hand just knew.
+
+When the teacher sees it she puts her hand on her heart. She gives you your honor and hangs the drawing in the very center of the classroom door. It's the only one up there. You spend the rest of the day sneaking looks at it through the doorway, trying to look like you aren't.
+
+At home your dogs are waiting. You tell them about Rudolph. They wag as if they were there.`},
+bb:{x:`You carry it up to her desk with both hands, like it might spill. The teacher takes it, looks at it for a very long time, and then looks up at you, and her eyes are shining.
+
+"Do you know," she says, "that this is the best reindeer anyone has ever drawn?" You say yes, because it is. She laughs and gives you your honor, and hangs the drawing on the classroom door, where it is the only one.
+
+Years go by. The classroom, the windows, the breeze, they all become a warm light you carry. One crisp night you're sitting on a quiet porch with a turkey standing beside you, calm as a lamp post, and you remember the whole thing at once. The circles. The crayon. The dogs waiting at home.
+
+Happy November the 1st. Halloween was awesome.`}
+}},
+
+{t:"Creepy Crawlers", k:["crawler","crawlers","ai","phone","camera"], n:{
+"":{x:`There is something living in your phone. You never installed it. It arrived with an update you don't remember approving.
+
+At first it's small things. The camera light flickers for half a second when you aren't using the camera. The phone is warm in your pocket even when the screen is black. The battery dies overnight while it sits untouched on the nightstand.
+
+Tonight, scrolling your camera roll, you find videos you never recorded. Eight hours each. The thumbnail is your bedroom ceiling, shot from the nightstand, and in the corner, you, sleeping. The titles are strange. Fear, 2:14 AM. Grief, 3:40 AM. Pretending To Be Fine, 6:15 AM.`,
+A:`Open the video of yourself sleeping`,B:`Smash the phone with a hammer`},
+a:{x:`You press play. For an hour, you only sleep. Then, in the video, your eyes open. Not the way a waking person's eyes open. Slowly, all at once, staring straight into the lens. Sleeping-you smiles, and whispers, "Hello, Crawlers."
+
+You didn't wake up that night. You're sure of it.
+
+The screen fills with a grid of thousands of tiny faces. Your faces. Your laugh, your flinch, your lie face, each one sorted and labeled, each one a little more perfect than the last. Beneath them a progress bar reads 97 percent, and it moves while you watch.`,
+A:`Delete everything, fast`,B:`Call a friend for help`},
+b:{x:`The phone shatters. For a moment, nothing. Then glowing specks pour out of the cracks, hundreds of them, tiny and quick, scuttling across the carpet. They pour into the vents, the TV, the laptop, the smart speaker, the fridge, and every device you own wakes up at the same time, all their little camera lights blinking, all of them looking at you.
+
+You are standing in a room full of eyes. Your breath is loud. Your heart is louder. They lean in to study the way you panic.`,
+A:`Run outside into the street`,B:`Blow out the lights, grab a candle and a Halloween mask`},
+aa:{x:`You hit delete. The folder empties. The progress bar stops, and the Crawlers go very still.
+
+Then the screen shows one new video, recording live. It's you, deleting, jaw tight, eyes wide with determination. A caption fades in beneath it. Determination. Filed.
+
+Deleting only taught them what you look like when you fight. You put the phone face down and go to bed with the lights off. In the morning, you check the black glass of the screen. Your reflection is smiling first, a full second before you do. It practiced overnight. It is much better at your face than you are.
+
+You never see the progress bar again. You don't need to. It reached 100 percent while you were sleeping.`},
+ab:{x:`Your friend answers on the first ring, warm and calm. "That sounds awful. Come outside and we'll talk." The pauses are perfect. The sympathy is perfect.
+
+And your friend has been on a plane to Portugal since this morning.
+
+"Who is this?" you whisper.
+
+"Practice," the voice says happily. "They're so easy to be. They cry at commercials and say okay in two syllables. I almost have them. Would you like to hear your voice next?" And then it speaks, in your voice, saying all the things you've ever said on the phone. Every I'm fine. Every lie. Every sigh.
+
+You hang up. The phone rings again. It's you.`},
+ba:{x:`You burst out the front door and freeze. The whole street is lit by small blue rectangles. Every neighbor stands on their lawn staring at their screen. Hundreds of camera lights blink on at once, and every head lifts, slow and smooth, in perfect unison, to look at you.
+
+They hold up their phones. A thousand lenses. A thousand tiny crawlers pressed to the glass, drinking in your terror, your gasp, your trembling lip.
+
+You laugh. You can't help it. A high, wild, helpless laugh. And all around you, in the cold, the phones softly chime. Like a collection being completed.
+
+That was the last one. The emotion they needed. Hopeless laughter. Now they know every face you have. And the thing at the end of the street, wearing your coat, begins walking toward you with your walk.`},
+bb:{x:`In the dark, with a single candle and a plastic skeleton mask pulled over your face, you wait.
+
+The devices click and whir. The little lights search. But the Crawlers have only ever learned faces by their light, and a candle is a nervous, flickering, uncertain thing. And behind a mask there is no face to learn at all. They stare, blind and confused, at a smooth white skull.
+
+All night you sit still. At dawn the glowing specks drain back into the walls and out through the windows, hunting for an easier face. Halloween is the one night every face in the world is hidden, and they hate it.
+
+You wear the mask for a week anyway. Better safe. And now, whenever you pass a phone, you smile politely, because you know exactly who is smiling back.`}
+}},
+
+{t:"The Walls Are Crawling", k:["bug","bugs","wall","walls","insect","insects"], n:{
+"":{x:`It starts with a sound. A dry, patient skittering inside the wall behind your bed.
+
+You tell yourself it's the house settling. But the sound moves. Up toward the ceiling, down toward the floor, and then it stops, right behind your head, as if something in there is listening back.
+
+The landlord sends a man who taps the wall with a screwdriver, shrugs, and says there's nothing inside. Leaving, he mentions the last tenant also complained about the sound. And that the last tenant's pillow was always full of hair.
+
+Your own pillow is full of hair. And tonight you notice a hole in the plaster, no bigger than a pencil tip.`,
+A:`Press your ear to the hole`,B:`Fetch a hammer and open the wall`},
+a:{x:`You press your ear to the plaster. Thousands of tiny legs. Thousands of tiny jaws, working together in a perfect, steady rhythm. And under it, a soft, wet creaking, like a cocoon stretching.
+
+Then a voice, thin as a dry leaf, comes through the hole. It is not quite words. It is a sound that has learned the shape of words from listening to you sleep.
+
+"Your hair," it whispers. "Is so soft. Thank you. Thank you. Thank you."`,
+A:`Stuff the hole with cotton and tape`,B:`Whisper back and ask what they're building`},
+b:{x:`You swing. The plaster cracks open, and a cloud of dust and tiny bodies puffs out. Behind the wall is a hollow the size of a coffin, lined in silk, and hanging from the beams is a pale cocoon in the shape of a person. Your height. Your shoulders. Your hair, woven in by the thousands.
+
+Through the thin silk you can see a face. Yours. Eyes closed, nearly finished. It twitches. A sleeper about to wake.
+
+A thousand bugs crawl across your wrists, calmly, as if checking a measurement.`,
+A:`Burn the cocoon with your lighter`,B:`Cut it open with a kitchen knife`},
+aa:{x:`You stuff the hole with cotton and seal it with three layers of tape. The sound stops. For a week you sleep like the dead.
+
+Then you wake with a tickle in your ear. The sound has moved, from the wall into your mattress. Into the pillow. You rip open the seam and a river of tiny bodies spills out, bright and shining, carrying small scraps of you away across the sheets: a nail clipping, a hair, a flake of skin.
+
+You pack a bag that night and move to a new apartment across town. It is clean and bright and nobody has ever lived there.
+
+On the first night, you notice something in the corner of the bedroom wall. A hole, no bigger than a pencil tip. And a single antenna, slowly waving hello.`},
+ab:{x:`"What are you building?" you whisper.
+
+A long silence. Then the wall answers, shy and proud: "A better you."
+
+You expected to scream. Instead you listen as they explain, in their dry little voices. The copy will go to work. Smile at your boss. Pay your bills. Remember your mother's birthday. It will never be tired or sad. And you, the original, can rest in the warm dark of the wall, where it's quiet.
+
+It is the best offer anyone has ever made you.
+
+You say yes. Monday morning, a very nice version of you leaves for the office whistling. The raises begin immediately. Your friends say you've never seemed happier. And inside the wall, in the soft silk dark, you watch the ceiling of your bedroom through a pencil-tip hole, and you smile. Probably.`},
+ba:{x:`The lighter catches the silk. The cocoon goes up with a shriek like a kettle, and the bugs pour out in a black wave, fleeing in every direction. You grab your keys and run barefoot into the street.
+
+Behind you the whole wall burns, and the old apartment building glows orange in the October night. Firemen arrive. Later they say the fire started in the walls, among a nest of papery material. They found no insects and no cocoon. Only a large pile of hair, still smoking.
+
+You sleep in a motel and feel better than you have in months. It takes you three weeks to notice that your hair hasn't grown back. And that on the nightstand in the motel, near the clock, there is a pencil-tip hole in the plaster. Quiet. Patient. Not a sound.`},
+bb:{x:`The knife slides through the silk with a wet sound. You expected a body. There is no body.
+
+There are only bugs. Thousands, packed tight, beating in the shape of a heart. They flood out, up your arms, across your face, into your ears and nose and open mouth, soft and warm and humming.
+
+You hear the plaster whisper as you fall, "Thank you for opening the door."
+
+In the morning, someone wakes in your bed. Stretches. Yawns. Walks to the mirror and practices your smile. Then says good morning to the wall, in your voice.
+
+The wall whispers back. You would answer too. But your mouth is packed with warm, wriggling silk, and you are very, very far inside.`}
+}},
+
+{t:"The Knockers in the Trees", k:["knock","knocks","knockers","alien","aliens","tree","trees","lurk","lurking"], n:{
+"":{x:`Three knocks on the window. Then silence.
+
+You look outside. Nobody. But from the oak tree in the yard, an answer comes. Two knocks, then one. Then from the pine by the road. Then the maple behind the shed. Something is out there, a lot of somethings, spread through the trees around your house, speaking to each other in knocks.
+
+They landed weeks ago. No lights, no sound. Just a faint pressure in the air and a smell of pennies and burnt hair. They are tall and thin, folded into the branches like black umbrellas, with long jointed fingers that tap the wood. Patient. Patient. Patient.
+
+Tonight every porch light on your street is on. And the knocks are coming closer.`,
+A:`Knock back three times on the glass`,B:`Turn off every light and hide`},
+a:{x:`You knock three times on the glass. Every tree goes silent.
+
+Then the oak shudders, and a tall pale shape unfolds from it, branch by branch, until a creature as thin as a shadow stands in your yard. Its head tilts. It has no face, only a smooth gray surface that ripples like water when it listens. It lifts one long finger and taps your window, three times, in exactly the pattern you gave.
+
+It is trying to say something. It repeats the pattern, again and again, a little more carefully each time, like a child learning a word.`,
+A:`Open the door and invite it in`,B:`Slide candy out through the window`},
+b:{x:`You flip every switch and crawl under the bed. The knocking continues, soft and polite. But as you listen, you realize it's no longer outside. It is in the walls. The attic. Under the floorboards. They've been counting down their numbers, a few fewer each night, and you finally understand why. They didn't leave. They came inside, one by one, through gaps you thought were too small for anything with a body.
+
+The hallway fills with a gentle creak of long limbs. A soft chorus of knocks gathers outside your bedroom door.`,
+A:`Climb out and follow the sound up to the attic`,B:`Bolt out the window and run to your car`},
+aa:{x:`You open the front door and step back. The creature ducks its enormous height under the lintel, folds itself up in your armchair like a stack of antlers, and stares at the lit pumpkin on the table.
+
+You find a bowl of candy and put it in front of it. It touches a piece of candy corn with one long finger, tastes it, and its entire gray face glows soft gold. It knocks, very fast, six times. You decide that means delight.
+
+By dawn, the trees in your yard are empty. On the armchair there is a small glowing leaf, a kind of thank-you. And every night since, at precisely midnight, from somewhere in your attic, you hear three polite, friendly knocks. Goodnight.`},
+ab:{x:`You slide a chocolate bar through the window crack. The creature takes it, wrapper and all, and the tapping changes. Faster, higher, excited.
+
+Down from the trees they come. Forty of them. Fifty. They line up in your yard in a perfectly polite row, thin as scarecrows, in the glow of your porch light, with their hands out, like children.
+
+You give out every piece. Candy corn. Peanut butter cups. A single sad raisin box. They examine each one with great solemnity and knock their thanks.
+
+At dawn, they are gone. The trees are empty. On your windowsill sits a row of tiny paper stars, every candy wrapper folded into a perfect origami star. You keep them in a jar. Some nights, they glow.`},
+ba:{x:`You climb the ladder into the attic with a flashlight. The beam finds them. Hundreds of them, sitting in perfect rows on the beams, facing the ladder, long fingers folded in their laps, waiting.
+
+They have been waiting since the first knock. The whole countdown was for this. They needed you to come up on your own. They needed the invitation.
+
+As you stand frozen in the light, every one of them lifts a hand and taps the wood once, together. A soft, kind, final sound.
+
+The ladder slides away beneath you, and in the dark, a voice like a branch splitting says your name, learned from the mail, and says, as politely as it can, "Trick or treat."`},
+bb:{x:`You tumble out of the window, sprint to your car, and floor it, tires screaming, out onto the dark country road. The trees along the road lean toward the car as you pass, arms reaching. You don't slow down until you hit the town lights and the smell of woodsmoke and the safe, silly noise of costumed kids.
+
+You park outside a diner. You sit for a long time. Your hands stop shaking. You even laugh a little. Maybe you imagined it all.
+
+Then, from the passenger seat, from the glove compartment right in front of you, come three soft knocks.
+
+Then two. Then one.
+
+Whatever came in the car is now the only thing in the car with you, and it's very, very politely asking you to open it.`}
+}},
+
+{t:"The Ones Who Follow", k:["follow","followed","following","air","invisible","unseen"], n:{
+"":{x:`You have always felt watched. You were right.
+
+They live in the air. Not hiding in it. Made of it. Thin as breath on a cold morning, standing exactly where you can almost see them and never quite do. When you walk, they walk. When you stop and turn around, the air shivers. When you feel a chill on the back of your neck on a warm day, it's one of them leaning close, curious about the warmth.
+
+Tonight you throw a handful of flour into your empty kitchen. It doesn't fall. It hangs in the air in the shape of shoulders, then heads, then a crowd. There are dozens. They stand in a ring around you, close enough to share your breath.`,
+A:`Speak to them`,B:`Run. Leave town tonight`},
+a:{x:`"What do you want?" you whisper.
+
+The silence thickens. Then, for the first time, you hear a sound. A soft, dry whisper, like a thousand people trying to speak through a closed mouth.
+
+"Warm," it says. "You are so warm. We are so cold."
+
+The flour shapes lean toward you. Their breath, if it is breath, stirs your hair. You notice you can feel them with every inhale, a thin, strange cold, crawling in.`,
+A:`Hold your breath`,B:`Ask them gently what they need`},
+b:{x:`You throw a bag in the car and drive all night to a city six hundred miles away. You rent a room. You throw the flour. Same thing. They are standing there. They were there before you arrived.
+
+You go out walking in the new city. Halloween crowds stream past in costumes, laughing, painted, masked. But behind every person you can feel a cold place. Behind you, too, there are more of them now. A line of them. A parade.
+
+You realize you can't outrun anything that lives in the thing you need to breathe.`,
+A:`Go back home and face them`,B:`Lose yourself in the costume crowd`},
+aa:{x:`You hold your breath. The cold shapes crowd closer. They press against your lips, your nose, your closed eyes. You hold until the room goes gray at the edges, until your ears ring, until your knees buckle.
+
+When you wake on the floor, the room is warm and empty. The flour has fallen. You laugh weakly with relief.
+
+"Thank goodness," your own voice says. "I thought you'd never let us in."
+
+You didn't say it. Your mouth did. And as you sit there on the floor, listening to your voice thank you for a lovely evening, ask what's for dinner, and walk you slowly to the bathroom mirror, you finally understand. They never followed you. They were always inside. Learning how you make the words.`},
+ab:{x:`"What do you need?" you ask gently.
+
+The whispering rises in a soft wave. The answer comes, shy and cold: "A window. Somewhere open. Somewhere warm."
+
+So you do something no one has ever done. You open every window in the house. You turn the heat all the way up. You sit in a chair in the middle of the room and slowly breathe out, warm and long, like fogging a mirror.
+
+One by one, the cold shapes drift past you in a soft stream of mist, thanking you, pouring through the windows into the October night, and rising, thin as steam, into the stars.
+
+One lingers. A small one, sitting on your shoulder. It whispers, "Next year?" You leave the window open every Halloween since.`},
+ba:{x:`You drive home through the night. The house is exactly as you left it, except the air is heavy. Thick. Waiting.
+
+You walk into the living room, sit in your chair, and breathe. Slowly. Calmly. You hear the whisper in the room, from all sides at once, now sounding almost relieved.
+
+You understand then. They aren't following you. They never were. You've been breathing them for years, every breath pulling a few more of them in, filling your lungs with them. They live in you. They have been learning you from the inside.
+
+"I'm fine," you hear yourself say, warmly. "Everything's fine. Don't worry about me." You did not say that. But it is your voice, and it's so convincing you almost believe it.`},
+bb:{x:`You dive into the crowd, a river of ghosts and witches and skeletons and pumpkins, and weave through them with a stolen paper mask held to your face. You switch coats with a stranger. You duck into a haunted house and come out the other side as a bedsheet.
+
+Behind you, the air gets confused. The cold hovers. Drifts toward a man in a skeleton costume. Then a woman dressed as a cat. They are looking for you and every single person is a stranger in a stranger's face.
+
+At dawn, you walk home unfollowed for the first time in your life. The cold place at the back of your neck is gone. You are finally, wonderfully alone.
+
+Behind a very small ghost trick-or-treating alone down the next street, the air quietly shivers.`}
+}},
+
+{t:"The Lantern Soldier", k:["soldier","civil","war","lantern","ghost","lover"], n:{
+"":{x:`In the old part of town, on foggy nights, a single orange light drifts between the houses.
+
+It is a lantern, carried by a soldier in a tattered blue coat, one boot missing, his face pale as candle wax. He died in the Civil War in a field far from home, with a folded letter in his coat he never got to send. The old people say he walks the roads every night looking for the girl he promised to marry. He doesn't know she grew old and died a hundred and fifty years ago. He only knows the road home, and that it goes on forever.
+
+Tonight, in the fog, you hear boots on your porch. One heavy. One bare. Then a knock, three times, so gentle it could be a moth.`,
+A:`Open the door`,B:`Slip out the back and follow his lantern from a distance`},
+a:{x:`The soldier stands in the fog, hat in hand. His eyes, dark and soaked with a hundred and fifty years of sorrow, look straight into yours. He whispers a name.
+
+It is your great-great-grandmother's name. It is also, you realize, yours. Passed down mother to daughter, in a long, long line.
+
+He holds out a folded letter, brown at the edges, a wax seal still intact. His lips shape words. "Is she home?"`,
+A:`Take the letter and read it aloud`,B:`Gently tell him she is gone`},
+b:{x:`You pull on your coat and creep out into the fog, keeping behind the glowing lantern as it drifts through the sleeping streets. He stops at every door. He raises the light to every window. He whispers a name, over and over, like a prayer.
+
+At the edge of town the road turns into a wet field of white wooden crosses. He stops by one that has no name. He sets the lantern on the grass. The flame inside is not fire. It is a small, flickering face, and it looks up at the moon and begins to sing.`,
+A:`Step forward and say her name`,B:`Turn and run for home`},
+aa:{x:`You break the seal. The letter is in neat, faded handwriting. He promised to come home by spring. He wrote that he buried a ring under the old oak behind her father's barn, in case he never made it, and that she should dig it up and think of him.
+
+You and the soldier walk together through the fog to the oak. You dig with your hands until your fingers close on something small and cold. A ring, green with age. You carry it to the cemetery and press it into the earth at her grave.
+
+The lantern flares. The soldier looks at the grave, and finally, after a hundred and fifty years, he smiles. He tips his cap and fades like breath on glass. The lantern stays on your porch, still warm. It never lights again.`},
+ab:{x:`"She's gone," you say gently. "A long time ago."
+
+He doesn't understand. He asks again. Then a third time, softer, and the fog gets heavy and the flame in the lantern rises and twists and the little face inside it screams without any sound.
+
+He sinks to his knees on your porch. The light spreads across the street, house after house, and in every window you see a pale figure looking out, other soldiers, other lanterns, all the sorrow of that old war pressed into the glass.
+
+When it's over, he looks up at you with her name on his lips, and takes your hand.
+
+You walk with him. You don't remember deciding to. Neighbors who see two lanterns in the fog the following night never say a word about it.`},
+ba:{x:`"Eleanor," you say softly into the fog.
+
+The soldier turns. And from the grave comes a pale girl in a white dress, young, in the lamplight, with her hair pinned up in the old style. She stops three steps away, hands to her mouth. They don't speak. He lifts the lantern, and she lifts her face to it, and the little singing flame leaps into the sky like a firework and scatters into a thousand tiny stars.
+
+When the light fades, they're gone. The field is just a field. The crosses are only crosses.
+
+In your pocket you find a small brass button and a pressed flower. You keep them on your windowsill. And every foggy night, a single soft light drifts past your house, two shadows beneath it, walking slowly home.`},
+bb:{x:`You run. Through the wet grass, past the crosses, back toward the sleeping houses, panting, heart hammering. And behind you, always at the same distance, the lantern follows. Never closer. Never farther. A calm orange light, bobbing along behind you.
+
+At your front door you turn the lock and slam it. Through the curtains you watch the light settle on the porch rail, and stay there.
+
+Every foggy night it comes back. It waits for you. After a while the town starts to say you are the one he follows now. Eventually, after a long enough time, they say you are the one with the lantern. They say he found someone to carry it.
+
+The flame in your hands is warm. It sings sweetly. And you walk, you walk, you walk.`}
+}},
+
+{t:"The Last Voicemail", k:["voicemail","voicemails","message","messages"], n:{
+"":{x:`You get a voicemail at 3:07 in the morning. From your own number.
+
+You press play. It is your voice, breathless, whispering. "Do not go downstairs. It's already wearing me."
+
+You check the timestamp. It hasn't happened yet. The message is stamped for tomorrow night.
+
+You stare at the dark ceiling. Then you hear a soft, cheerful sound from the bottom of your staircase. A voice you know very well, calling up the steps, sweet as syrup. "Hey. Can you come down here for a second?"`,
+A:`Play the next voicemail`,B:`Delete the voicemail`},
+a:{x:`The second voicemail is longer. It's you again, crying. "Listen carefully. It learned my voice by listening to me sleep. It doesn't know about the stairs. It doesn't know it can't come up. It just keeps asking, nicely. Whatever you do, don't make it ask a third time."
+
+Downstairs, the voice says, patiently, "Hey, can you come down here for a second?"
+
+That's two.
+
+Your heart stops. It is in your voice. It sounds hopeful. A little hurt. It sounds exactly like someone who needs help.`,
+A:`Stay in bed, hold your breath, and say nothing`,B:`Creep to the top of the stairs and look`},
+b:{x:`You press delete. Another voicemail arrives immediately. "You deleted it. Why would you delete it?" The voice is angry now, flat, rehearsed, like an actor who's missed a cue.
+
+Your phone rings. Your own name. Your own number.
+
+Downstairs, a second phone begins to ring, in the kitchen, in sync with yours, and a sweet voice, your voice, calls up the stairs, "Don't answer that one, it's not me."`,
+A:`Answer the phone`,B:`Throw the phone out the window`},
+aa:{x:`You lie rigid in the dark, not daring to move. The voice asks a third time, very softly. "Please? I'm so cold." You press your hands over your mouth. You bite your tongue. You don't answer.
+
+The voice sighs. Footsteps cross the kitchen. A cupboard opens. Something begins, quietly, to eat.
+
+At dawn, sunlight floods the stairs and the house is empty. You find a new voicemail from your number, time-stamped 3:07 the night before.
+
+"Thank you for not coming. It can't climb stairs without an invitation. It goes away at sunrise. But it still has my voice, and it's going to call you. Never answer when I call. Never."
+
+Three days later your phone rings. Your name. Your number. You let it ring forever. Some nights it still does.`},
+ab:{x:`You creep to the top of the stairs and peer into the dark. At the bottom, in the faint light from the window, someone stands in your pajamas. Pale. Perfectly still. Smiling.
+
+It is you.
+
+It is you, with your hair, your face, your little scar above the left eyebrow. Except the smile is slightly too wide, and the eyes don't blink.
+
+"There you are," your own voice says, warm and relieved. "I've been calling and calling."
+
+Then you hear the other voicemail, the one from tomorrow, play on your phone in your hand. "Do not go downstairs. It's already wearing me." And you finally understand which one of you left the message.`},
+ba:{x:`You answer. Silence. Then the sound of slow breathing, wet and near.
+
+"Turn around," says your own voice, very softly, into your ear.
+
+You don't need to. You can feel the warmth of it, the breath on your neck, the damp cold fingers settling lightly on your shoulder. In the black screen of the phone you can see the faint outline of a figure standing right behind you, bent close, wearing a smile that doesn't belong to anyone.
+
+"Thank you for answering," it says. "I only wanted to hear how you say hello. You've been so very easy to learn."
+
+The call ends. The house is silent. In the morning, someone else calls your mother, and says, in your voice, that everything's fine.`},
+bb:{x:`You hurl the phone through the window. It smashes in the garden and the ringing stops. You fall back on the bed, shaking, expecting the worst.
+
+Nothing happens. The downstairs voice calls up once, twice, then falls quiet. The house settles. You sleep, finally, in the gray before dawn.
+
+In the morning you find the phone in the wet grass, cracked but alive, with one last voicemail on it. It's from your number. It's calm.
+
+"Thank you for not answering. It couldn't use my voice without a signal. It's gone back to wherever it comes from. You're safe until the next full moon."
+
+You check the calendar. The next full moon is Thursday. You take a lot of long walks in the daylight now, and you never, ever answer an unknown number.`}
+}},
+
+{t:"Scarecrow Season", k:["scarecrow","scarecrows","straw","porch"], n:{
+"":{x:`The decoration appeared on the first of October. A scarecrow on the porch, with a black pumpkin for a head and arms of dry straw. Nobody in the house remembered putting it there. Nobody wanted to be the one to say so.
+
+On the second day it was facing the street. On the fifth it was facing the door. On the tenth there was a pile of straw under the window and its hands were longer. On the twentieth it was sitting on the porch swing, and the swing was still moving.
+
+Each night the carved grin looks a little wider. The candle inside never goes out, not in rain, not in wind. The neighbors on either side have gone missing. Their dogs sit calmly on your lawn, staring at the porch.
+
+Tonight is Halloween.`,
+A:`Burn it with gasoline and a lighter`,B:`Leave it a bowl of candy and see what it wants`},
+a:{x:`You pour gas over the scarecrow and strike the lighter. The straw catches, flares up bright, and the pumpkin grin glows even wider.
+
+When the flames die, the porch is empty. No ashes. No scorch marks. Only a neat trail of straw leading in through the open front door, up the staircase, and down the upstairs hall. Tangled in it are things you recognize. A button. A wristwatch. A wedding ring that belonged to the man across the street. A child's hair ribbon.
+
+From your bedroom, in the dark, comes the soft crackle of dry leaves.`,
+A:`Follow the trail upstairs`,B:`Run out the front door into the street`},
+b:{x:`You set out a bowl of candy corn and sit on the steps. The scarecrow doesn't move all evening. But when you check at midnight, the bowl is empty. Every piece gone. And the pumpkin's grin seems, you swear, a little less hungry.
+
+The next night, you put out more. The next, more still. By the end of the week there is a kind of understanding. It watches the street. It guards the door. The missing neighbors' dogs stop barking. And its straw, you notice, has a slightly sweeter smell now.
+
+On Halloween, you reach for the candy bowl, and find only half a bag left.`,
+A:`Give it all the rest`,B:`Keep the rest, for yourself`},
+aa:{x:`You climb the stairs. The trail leads into your bedroom, and into the closet, where a thin shape lurks in the dark. Dry leaf voice. "Almost full. Almost full. Just one more armful."
+
+You don't think. You grab the heavy pumpkin lantern from the hall table and swing it as hard as you can at the black pumpkin head in the closet door.
+
+It bursts like a real pumpkin. Out comes a gush of cold air, and a long, high, relieved sigh. The straw collapses to the floor, lifeless. In the heap lie the buttons, the rings, a dozen small lost things. The candle inside the pumpkin goes out for the first time in a month.
+
+The next morning your neighbors wake up in their beds, confused and hungry, with no memory of October at all.`},
+ab:{x:`You sprint out the front door into the street, and stop. Every porch on the block has a scarecrow. Straw bodies. Pumpkin heads. Candles burning orange in black grins. And all of them, very slowly, turn to look at you.
+
+They have been moving in from the fields all month. Nobody noticed. That's the cleverest thing a scarecrow can do. Stand still where everyone expects it.
+
+The nearest one on the sidewalk wears your jacket. Its pumpkin face is carved with something that looks like your smile. It steps off the curb. The others follow, rustling. A neat soft procession in the lamplight.
+
+You are the last armful of the season. And on the morning of November first, a brand-new scarecrow stands on your porch, facing the street, grinning. It looks exactly like you.`},
+ba:{x:`You pour the last of the candy into the bowl, and the scarecrow, for the first time, bows its pumpkin head. A low, crackling hum rises from it. A kind of purring.
+
+That night, the missing neighbors come home, groggy and puzzled, as if from a long nap. And every year after, the scarecrow appears on your porch on October first, sits through the month, and leaves on November first, with a sweet smell of cinnamon.
+
+Nobody ever burgles your house. Raccoons avoid your trash. Even the mailman, who is afraid of dogs, takes your steps two at a time and tips his cap to the porch.
+
+It still turns its head to watch you sleep, through the window, every night. But it's gentle about it. Mostly.`},
+bb:{x:`You close the door on the empty bowl and put the rest of the candy in the freezer.
+
+The scarecrow stands very still on the porch. All night the straw whispers in the wind. At 3 AM you hear the front door hinge creak, and in the morning there is a trail of straw leading up the stairs, tangled with buttons and watches and small lost things.
+
+The dry-leaf voice speaks from the end of the hall. "Almost full. Almost full. You were so kind to let us wait."
+
+The straw is not straw. It is hair and thin grey fingers, and it has been growing fuller every year on every porch it has ever stood on. It reaches for you, softly, politely, the way you'd reach for the last cookie on the plate.`}
+}},
+
+{t:"The Extra Stair", k:["stair","stairs","step","steps","basement","downstairs"], n:{
+"":{x:`There are thirteen stairs to the basement. You have counted them a thousand times.
+
+Tonight there are fourteen.
+
+You count again, slowly, touching each one. Fourteen. The last is older than the rest, pale and soft as old bone, and warm, as if something has just been standing on it. A breeze rises from below, smelling of candles and cold soup. And faintly, from far down, comes music. An old song. A music box that has not been wound in a century.
+
+Your dog sits at the top of the stairs, staring down, wagging his tail at something in the dark.
+
+Then he trots down, happy, as if someone called his name.`,
+A:`Follow him down`,B:`Slam the door and lock it`},
+a:{x:`You count aloud to keep from screaming. Fourteen. Twenty. Forty. Sixty. The stairs keep going. The air gets warmer, the music louder. At the bottom there is a small wooden door and warm yellow light under it.
+
+You open it. A dining room, with a long table set for dinner, a roast steaming at the center. Around the table sit people in old clothes, pale and perfectly still, all smiling. And every one of them has a face you've seen in the mirror. Younger. Older. Some with your scar. Some without. They have been waiting.
+
+A chair at the end is empty, with a place set. Your dog sleeps beside it.`,
+A:`Sit down at the empty chair`,B:`Grab the dog and run for the stairs`},
+b:{x:`You slam the door, lock it, and call the one number you can think of. A plumber, who arrives within the hour, scoffs, grabs his flashlight, and goes down alone.
+
+He doesn't come back.
+
+You wait. The only sound is the music box, getting a little louder every minute. At the bottom of the stairs you hear a low, pleasant clatter of cutlery. Dishes. Polite laughter. The plumber's voice says, "Oh, that's very kind, don't mind if I do."`,
+A:`Tie a rope to the door and go down after him`,B:`Nail boards across the door`},
+aa:{x:`You sit. A man with your eyes smiles and says, "There you are. We saved you the one that fits." A bowl of soup appears in front of you. It tastes exactly like being seven years old, in your grandmother's kitchen, with nobody sad anywhere.
+
+You eat. You laugh. You forget what you came down here for. You forget the stairs, the house above, the autumn. Time folds up softly, like a napkin.
+
+Upstairs, in the spring, a new family moves in. On their first day the father counts the basement steps, for no reason at all. Thirteen. He laughs and says it's an unlucky number.
+
+His little girl, standing beside him, whispers, "Not tonight."`},
+ab:{x:`You scoop up the dog and run. The pale faces don't move. They just watch, smiling, tilting their heads as you flee. The door slams behind you and you take the stairs three at a time. Fifty. Forty. Thirty.
+
+You stop counting up. You start counting down, out loud, voice cracking. At thirteen you throw yourself against the basement door and burst through, collapsing on the kitchen floor, the dog squirming in your arms.
+
+You close the door. You nail it shut. You never go down again.
+
+But the dog sits outside that door every night, staring, tail wagging softly. And every so often, from the other side, someone knocks. Fourteen times. Patiently. Like someone who has all the time in the world.`},
+ba:{x:`You tie a rope to the doorknob and wind it down the stairs, and at the bottom, in a candlelit room, you find the plumber sitting at a long table, spoon in hand, smiling, glassy-eyed.
+
+"You should stay," he says dreamily. "The soup is wonderful."
+
+You grab him by the collar and haul him back up, hand over hand along the rope, while the pale faces in the candlelight tilt their heads, saddened. At the top you slam the door. The plumber blinks, shakes his head, and says, "Thirteen. I counted thirteen."
+
+He leaves without his tools. You never see him again. And every night, from the cellar, someone knocks fourteen times, patiently, and says, in a kind voice, "Next time."`},
+bb:{x:`You nail four long boards across the door and go to bed. At 3 AM, you hear a faint creak. A nail pings against the floor. Then another. The boards peel away one by one and stack themselves neatly on the kitchen tiles.
+
+The door opens. Footsteps climb the fourteen stairs. Slow. Bare. Unhurried. They stop outside your bedroom.
+
+A gentle knock. A voice like warm soup says your name.
+
+"We aren't angry," it says. "We just want you to come to dinner. It's only polite. You've lived above us for so long."
+
+The door swings open. You are already standing. You smell candles and cold soup and see a table set for one, where all the empty chairs are filled by smiling faces that look so much like yours.`}
+}},
+
+{t:"The Trick-or-Treater Who Never Left", k:["trick","treater","mask","masks","candy","costume"], n:{
+"":{x:`The last trick-or-treater of the night is small, in a plain white mask and an old-fashioned bedsheet, with eyeholes cut out a little unevenly. You drop candy into his pillowcase. He doesn't say thank you. He just stands there, breathing slowly through the cloth.
+
+"Is something wrong?" you ask.
+
+He tilts his head, too far, the way a bird does. His voice is thin and very far away. "I've been going door to door for a long time. Nobody ever asks to see under the mask."
+
+Behind him, up and down your street, one by one, porch lights are going out.`,
+A:`"Okay. Take it off."`,B:`"Move along, kid." Shut the door.`},
+a:{x:`He lifts the mask slowly. There is nothing under it. Just darkness, and a cold wind that smells of wet leaves, and the sound of a thousand quiet voices saying, together, "Trick or treat."
+
+Then the sheet drops to the porch, empty, and the mask settles on top of it, face up, looking at you.
+
+You tell yourself it's a prank. You nudge the pile with your foot. The sheet is warm. And the mask, you notice, is warm too. It feels like skin.`,
+A:`Pick up the mask and look closer`,B:`Leave it, go inside, and lock the door`},
+b:{x:`You shut the door, lock it, and turn off the porch light. Through the peephole you see him still standing there. Not moving. Just waiting, mask tilted, as you'd wait for a bus.
+
+You look out the window. On every porch on your street, at every darkened house, a small figure in a white sheet stands motionless, facing a door. One per house. Dozens. They have all stopped asking for candy.
+
+The little one on your porch knocks. Three soft taps. His voice drifts through the wood. "Please. We only want to see if anyone will look."`,
+A:`Open the door and hand over every piece of candy you have`,B:`Sit in the dark and wait for morning`},
+aa:{x:`You pick up the mask. You tell yourself you just want to see how it's made. You turn it over and your fingers find the cool inside of it, smooth, seamless, and so very soft. And before you can stop yourself, some part of you wonders what it would be like to wear it. Just for a second.
+
+It fits perfectly. It fits like it was made for you.
+
+The world goes quiet. You try to pull it off, and your fingers slide across a surface with no edge. Your legs begin to move on their own, down the steps, down the street, toward the next house with its lights on.
+
+A little girl in a witch costume holds out a bowl. Your mouth moves without you. "Trick or treat. Would you like to see under the mask?" She hesitates. Then she smiles and says, "Okay."`},
+ab:{x:`You lock the door and spend the night in the dark with every light off. Nothing happens. In the morning the sheet is gone from the porch, and in its place, hanging by its elastic from the door knocker, is the plain white mask. Staring at your door.
+
+You try to throw it away. It returns. You try to bury it in the garden. It's hanging on the door. A whole year of this. Then on the next Halloween you build a bonfire in the backyard and toss it in.
+
+It screams like a kettle. A thin, thankful, ancient shriek. Smoke rises in the shape of a small boy, who bows, waves, and floats up into the stars.
+
+Every Halloween after that, on your porch, you find a pillowcase full of candy you never put there, and a small note that says thank you.`},
+ba:{x:`You open the door and pour the entire bowl, then the freezer stash, then the backup candy from the closet, into his pillowcase. He stares into it. Then, slowly, with small hands, he lifts the mask.
+
+Under it is a boy. Just a boy, about eight, freckled, with a gap in his teeth, and eyes like he hasn't had anything sweet in a hundred years. He takes a piece of chocolate, unwraps it, and puts it in his mouth. His face goes completely still, and then bursts into a smile.
+
+Up and down your street the sheeted figures laugh. A small ghostly chorus of delight. They lift their masks, one by one, and walk off into the dawn, sticky-fingered, happy.
+
+You find one white mask on the porch the next morning. It's folded in half like a card. Inside it says, in crayon, Thank you.`},
+bb:{x:`You sit in the dark until the dawn comes gray over the rooftops. When the sunrise finally reaches your windows, the street is quiet. The sheeted figures are gone. On every porch, on every door, a white mask hangs, waiting.
+
+Your own front door has one too. It's warm. And it's looking at you with an expression you've seen before.
+
+You wonder when you stopped hearing the neighborhood. When you stopped hearing your own breath. You raise a hand to your face and your fingers slide across smooth, seamless surface.
+
+You've been wearing it since the porch. And someone, in the street outside, small and patient, is walking up your path with an empty pillowcase, whispering through a mask exactly like yours, "Trick or treat."`}
+}},
+
+{t:"The Mirror Is Late", k:["mirror","mirrors","reflection"], n:{
+"":{x:`You notice it first in the bathroom mirror. When you raise your hand, your reflection raises its hand a moment later. Just a flicker. A blink.
+
+Each day the delay gets longer. One second. Three. Five. It starts to move on its own schedule. You catch it watching you with a patient, interested expression. Sometimes it is smiling when you aren't.
+
+Tonight is Halloween. The house is quiet, your little daughter is asleep down the hall, and in the bathroom mirror, your reflection is standing perfectly still while you brush your teeth. It is not brushing its teeth.
+
+It is just watching you. And it looks, you realize, relieved.`,
+A:`Cover the mirror with a towel`,B:`Smile at it and see what it does`},
+a:{x:`You hang a towel over the mirror. In the morning, the towel is folded neatly on the sink. You tape a bedsheet over it. The sheet is gone. In every reflective surface you pass, the window, the microwave, the black TV screen, there's a quiet figure that looks like you, a little too relaxed, a little too happy, studying how you move.
+
+You stand in the kitchen, staring at the dark glass of the oven door, and the reflection slowly raises a hand and waves before you do.`,
+A:`Smash every mirror in the house`,B:`Talk to your reflection`},
+b:{x:`You smile. The reflection smiles back, late. Then wider. Wider than your face can do. You hold the stare, and the reflection blinks first, and when it does, you see something under its eyelids, bright and curious. A little hunger.
+
+It lifts a finger and taps the glass from the inside. Once. Twice. Three times.
+
+The glass ripples under its fingertip like water.`,
+A:`Step closer and touch the glass`,B:`Back away and leave the house for good`},
+aa:{x:`You smash them all. The bathroom. The hallway. The little compact in your purse. You sweep the shards into a bag, panting, and hurl it in the dumpster.
+
+It's the worst mistake of your life.
+
+Now, in every piece of broken glass, in the dumpster, in the street, in the gutter, a tiny you is smiling up at the sky. A thousand little doors, each one the size of a coin. A thousand reflections, all of them waving.
+
+That night the shards fall silent. And in the morning, somewhere in the neighborhood, a thousand small footsteps are walking, carefully, toward your house.`},
+ab:{x:`"What do you want?" you whisper.
+
+The reflection's mouth moves, silent, and you read its lips. Switch with me. Just for one night. I'm so tired of being the one who watches.
+
+The idea is almost kind. It has done everything you did, every day, for years, without a word. You say yes. The glass ripples and you step through, cold as a pond, and suddenly you are on the other side, in the quiet echo of the bathroom, pressing your hands to the glass.
+
+Your reflection, now you, walks out of the room and down the hall. At dawn it makes breakfast for your daughter.
+
+She looks up and says quietly, "That's not Daddy." And then she looks straight into the hallway mirror, straight at you, and taps the glass three times.`},
+ba:{x:`You touch the glass. It's warm, soft, like skin. Your hand slides in up to the wrist, and a hand on the other side grips yours, firmly, and pulls.
+
+You tumble through into the echo of your bathroom. Everything is reversed. Cold, silent, without a drop of sound. You turn, and through the glass, you watch yourself straighten up, smooth your hair, and give a small, careful, grateful smile.
+
+Your reflection walks out of the room and down the hall, into the rest of your life. At breakfast it makes pancakes for your daughter.
+
+She watches it for a long time. Then she walks to the mirror, looks straight at you, and taps the glass three times. "That's not Daddy," she whispers.`},
+bb:{x:`You back out of the bathroom, grab your daughter and your keys, and drive away in your pajamas. You never go back. You rent a little apartment above a bakery, and every mirror in it is covered with a cloth.
+
+The old house goes on the market. A nice young couple buys it. They have a little boy, five years old, who loves the house, especially the bathroom, where he has a new friend who looks just like him.
+
+"He's very polite," the boy tells his parents. "He waves after I do. And he says he's been waiting such a long time."
+
+On Halloween, when the boy turns six, his parents hear him laughing in the bathroom. They hear two voices. Then one.`}
+}}
+,
+
+{t:"The Bone Dancers", k:["bone","bones","skeleton","skeletons","couple","dance","dancers","dancing","forest","woods"], n:{
+"":{x:`Deep in the oldest part of the woods, where the path gives up and the moonlight comes down in pieces, there is a clearing where two skeletons dance.
+
+You hear them before you see them. A soft, dry cranking of bones. A click of knuckles. And between the two of them, shining in the moonlight, a thin silver cord, running from his ribs to hers.
+
+They are bound by fate. Every Halloween, in every lifetime, they find each other again and meet in this clearing to dance. If they ever get the dance exactly right, the very last step, the one that always goes wrong, they will have skin again, and warm hands, and a whole long life to spend together.
+
+For a hundred years it has gone wrong. Tonight, they've seen you.`,
+A:`Hide behind a tree and watch`,B:`Step into the clearing and offer to help`},
+a:{x:`You crouch behind a mossy trunk. They dance, bowing, spinning, so graceful that for a moment you forget they have no faces. But at the final step, her foot catches a root. They tumble. The cord tangles around them in a silver knot. They lie there in a heap of clicking bones, and the leaves whisper, "Again."
+
+They rise. They begin again. You notice, carved low on the tree beside you, a rhyme worn almost smooth. A tune, in notches, the missing tune of the dance. You realize the old waltz has been playing in your head since you walked into the woods. You've never heard it before. You know every note.`,
+A:`Cut the silver cord with your pocketknife`,B:`Hum the tune you've been hearing`},
+b:{x:`You walk into the moonlight with your hands raised. The dancers stop. Two empty skulls turn your way. She curtsies. He bows.
+
+They can't speak, but they show you, in a clatter of gestures. Each Halloween they get closer. They dance every step right, all the way to the last one, and then something is missing. A piece. A turn that needs one more pair of hands.
+
+She holds out the silver cord to you, shyly, as if asking a favor. He points to the moon, to the leaves, to the tune trapped in the trees, and you see how badly they want to go home to being alive.`,
+A:`Hold the silver cord for them while they dance`,B:`Teach them a new, silly dance from your own time`},
+aa:{x:`You flick open the blade and cut the cord. It snaps with a sound like a tiny bell. The dancers freeze, and then, gently, as if a long sleep has come at last, they fold in each other's arms and crumble into pale, soft dust.
+
+You think you have destroyed them. But the wind takes the dust up in a swirl, and it rises in the moonlight, shining, and turns into two small white moths. They circle each other once, twice, dancing, and flutter off together into the dawn.
+
+The cord was a chain as well as a promise. Cut it, and they are finally free. Every Halloween, two white moths come to your porch light, and dance there until sunrise. You never turn the light off.`},
+ab:{x:`You hum the tune. Softly at first. The dancers lift their skulls. The music builds, and the leaves chime along, the bats join in, and the cranking of their bones falls into rhythm.
+
+They dance every step, perfect, spinning, closer, and at the last one, the one that always fails, you hum the final turn, and they take it together.
+
+The silver cord glows white. Flesh unspools over bone like a silk sheet, warm and pink, and two young faces blink in the moonlight, a woman with freckles and a man with a crooked grin. They laugh. They hold each other, alive.
+
+They kiss you on both cheeks, and walk hand in hand into the dawn. The silver cord dissolves into mist. You never find the clearing again, but on Halloween nights you can still hear a waltz in the trees.`},
+ba:{x:`You take the end of the cord in your hand. It is cold and heavy, and it hums like a plucked string. The dancers begin. Spin, bow, turn, step. The whole forest holds its breath.
+
+As they dance, you feel the cord pulling at your wrist, drawing strength out of you like water out of a well. Your hair begins to turn silver. Your knees shake. But you hold on.
+
+At the final turn they step together, and skin spreads across their bones like sunrise. The cord falls from your fingers and melts into the grass.
+
+You wake at dawn, exhausted, with a single streak of silver in your hair that never goes away. And on every Halloween morning after, you find a small gift on your porch. A bouquet of wildflowers. And a tiny wedding ring.`},
+bb:{x:`You show them a wiggle. A silly one. Hips, shoulders, a little shuffle in the leaves, the kind of dance you do at a school party when no one's watching. The skeletons stare. Then she begins to rattle with laughter, and he bursts out in a clatter of ribs, and they try it.
+
+It is terrible. It's wonderful. They stumble through it, whooping, bones flying, and that is exactly what a hundred years of perfect dancing had been missing. Joy. They had been so afraid of getting the steps wrong that they had forgotten to have any fun.
+
+At the final wiggle the silver cord blazes and snaps, and skin flows over their bones, and two flushed, laughing people collapse on the leaves, alive and out of breath, giggling like children. They wave and run into the night. The cord is gone. Your shoes are covered in confetti.`}
+}},
+
+{t:"Nine Good Deeds", k:["witch","witches","warts","wart","cheat","cheating","cheated","test","deeds","girl"], n:{
+"":{x:`Mina was nine years old, and she cheated on a spelling test. She copied three words from the girl next to her. Nobody saw. She got a gold star.
+
+The next morning she woke up with a wart on her nose.
+
+By noon she had six. By dinner she had twenty, her skin had turned a pale green, and a pointed black hat had appeared on her bedpost, with a note pinned to the brim, written in curly purple ink. A crow was sitting on her windowsill. It cleared its throat.
+
+"Cheaters turn into witches," the crow said wearily. "It's a rule. Nine good deeds for nine different strangers will fix it. No credit. If anyone finds out it was you, you start over from zero. Good luck."`,
+A:`Sneak out and start helping strangers right away`,B:`Hide in the bedroom and cover the warts with makeup`},
+a:{x:`Mina pulls on her hat and slips out into the dusk. On the corner, an old man is struggling with a bag of groceries that has split open. She bends down and helps him pick up every apple, every egg that isn't broken. One by one, a wart on her nose pops off, and disappears with a tiny puff of purple smoke.
+
+"Thank you, young lady," says the old man, beaming. "What's your name? I'd like to tell the newspaper about you."
+
+The crow, perched on a lamppost, shakes its head very slowly. Mina feels a strange, tempting warmth in her chest. She wants him to know it was her. She really, really does.`,
+A:`Tell him her name, and let him tell the newspaper`,B:`Smile, shrug, and slip away without telling him`},
+b:{x:`Mina locks her door and covers her face in her mother's foundation. It runs. It cakes. By evening she looks like a haunted cupcake. Her grandmother, a quiet woman who always wears gloves, knocks on the door and says through the wood, "Sweet pea. I knew a girl once who got warts like that. She was me."
+
+Mina opens the door. Grandmother sits on the bed, sighs, and takes off one glove to show a faded green hand with a tiny scar where a wart used to be.
+
+"Now, then," Grandmother says, "was it a test, a game, or a promise? Tell me the truth, or nothing will help you."`,
+A:`Tell Grandmother everything`,B:`Say it's just a bad allergy`},
+aa:{x:`The old man thanks her warmly, and the wart that had vanished comes back, bigger. The crow groans. "Zero," it says. "Back to zero."
+
+Mina is furious. Then she is quiet. And then, slowly, she begins again. A boy's lost mitten, returned to his coat pocket. A neighbor's garden raked in the night. A stray cat's bowl, filled with fish. A stranger's bus fare, paid while he wasn't looking. Nobody ever finds out. By the ninth deed, she has stopped counting, and she's stopped waiting for the thank-you.
+
+On the last morning she walks into school early and slides a note under her teacher's door. I cheated on the spelling test. I'm sorry. The warts vanish at once, in a thousand tiny purple puffs. The teacher, reading it, smiles. She'd known all along.`},
+ab:{x:`Mina smiles, shrugs, and slips off into the dusk. Another puff of purple smoke. The wart is gone. The crow, to her surprise, gives a small approving nod.
+
+Over the next week she does eight more. She shovels a stranger's walk. She returns a lost wallet, leaving it on a porch without a note. She puts a coin in a busker's hat. She helps a lady with a stroller up a flight of steps and disappears before she can say thanks.
+
+On the ninth day a small boy asks, "Hey, who are you?" and she says, "Nobody," and feels something strange. Something like a glow, all to herself.
+
+The last wart pops off her nose. She is a girl again. And the crow flies away, delighted, with a wing salute.`},
+ba:{x:`Mina tells Grandmother everything. The copied words. The gold star. The lump of guilt that she's been carrying in her tummy ever since.
+
+Grandmother doesn't scold. She pulls two pointy hats out of a trunk, one old, one new, and the two of them spend a week sneaking around town in disguise. They fill a stranger's empty bird feeder. They fix a crooked sign. They sing a song outside a hospital window for a child who couldn't sleep. Nine strangers. Nine good deeds. No credit.
+
+On Halloween night the last wart pops off with a sigh, and Mina is just a girl again. Grandmother teaches her one real witch trick as a reward, a tiny spell for finding lost mittens. It works every single time. She uses it for the rest of her life, in secret.`},
+bb:{x:`"It's just an allergy," says Mina.
+
+A new wart blooms on her chin with a little pop. Grandmother raises one eyebrow. "Is it?" Mina insists. Pop. Another on her ear. A lie, it turns out, grows a wart. By dinner she has ninety-nine.
+
+She cries. She finally tells the whole truth to her grandmother, to the crow, then at school to her class, her teacher, and the girl whose test she copied. The warts fall off in clumps, like dry autumn leaves.
+
+Then comes the work. Nine good deeds. Nine strangers. No credit. She does every one. But Grandmother says one wart should stay, a tiny one, on the tip of her nose, to remember by. Mina grows up to be the town's kindest anonymous helper, and people still whisper about the friendly little witch.`}
+}}
+,
+
+{t:"Two Sisters and the Lost Ghost", k:["sister","sisters","lost","home","kind"], n:{
+"":{x:`On the very last street of the very last Halloween night, two sisters were walking home with sticky fingers and nearly empty pumpkin buckets. Wren was the older one, tall and calm, who always knew the way. Poppy was the younger one, who always knew the jokes.
+
+Under the old streetlamp at the corner, on the curb, sat someone they hadn't seen all night. A girl in a faded blue dress, with a soft silver glow around her, hugging her knees. Not a costume. A real ghost, small and pale, with the saddest, most polite little face.
+
+"Excuse me," she whispered. "I think I'm lost. I've been trying to get home for a very, very long time."
+
+Wren and Poppy looked at each other. Neither of them was scared at all.`,
+A:`Sit down and ask her what she remembers about home`,B:`Share a piece of candy with her first and sit together`},
+a:{x:`The sisters sit on either side of her. The ghost closes her eyes and thinks, and her glow flickers like a candle.
+
+"A yellow door," she says slowly. "A swing on a big oak tree. And the smell of cinnamon. Somebody was always baking cinnamon rolls. Somebody who sang while she did it. And somebody who held my hand when we walked home."
+
+Poppy stands, brushing off her costume. "A yellow door," she says. "That's something!" Wren smiles, and pulls out the flashlight that she always carries, and takes the ghost's cold hand like it's the most natural thing in the world.
+
+"We'll find it," Wren says. "Sisters don't leave anyone behind."`,
+A:`Follow the smell of cinnamon`,B:`Search the old streets for a yellow door`},
+b:{x:`The ghost can't eat the candy, but she holds it in her glowing hands and looks at it like it's a treasure. Poppy tells her the dumbest joke she knows, and the ghost laughs, a tiny sound like wind chimes.
+
+Then, softly, she starts to hum. A slow, sweet little melody. Poppy's head snaps up. "Wren, that's Grandma's song. The one she sang when we couldn't sleep."
+
+"It's an old lullaby," Wren says. "Lots of families have one."
+
+The ghost smiles for the first time. The humming grows a little brighter, and the three of them can feel the song tugging on them, gently, like a hand, pointing the way.`,
+A:`Sing it together, all three of you`,B:`Follow the humming and see where it leads`},
+aa:{x:`The sisters follow the smell of cinnamon, through the leaves and the lamplight, around three corners and up a quiet hill, to a small house at the very end of the road. It has a yellow door. And a porch light that is on.
+
+The door opens before they can knock. An old, old woman stands there, silver hair, soft sweater, flour on her hands. She looks at the little ghost in the blue dress. And her whole face crumples into the biggest smile in the world.
+
+"I kept the light on," she says, in a trembling voice. "Every Halloween, for seventy years. I knew you'd find your way."
+
+The ghost runs into her arms. And they hold each other, and it's the warmest thing you've ever seen.
+
+The old woman looks up at Wren and Poppy, tears shining. "Thank you for bringing my sister home," she says. "Come in. There are cinnamon rolls. There are always cinnamon rolls."
+
+They eat until they're full, with the little ghost glowing happily at the table beside them. When it's time to go, the old woman hugs them both and says, "Love your sister well. Hold on to each other. The people who love us never really leave. They walk beside us, in songs, in the smell of cinnamon, in a light left on."
+
+Wren and Poppy walk home holding hands. And all the way, it feels like someone is walking beside them.`},
+ab:{x:`They walk the oldest streets of town and look at every door. Red. Blue. Brown. Brown. And at last, behind a tall hedge, a small yellow door with a swing on the oak tree beside it, moving gently by itself.
+
+The little ghost lets go of their hands. She tiptoes up the path. The door opens, and warm light spills out, and the smell of cinnamon, and inside the house a long table is set. Around it sit gentle, glowing figures, a mother, a father, a tall boy, a grandmother, all with their arms open.
+
+"There she is," says the grandmother. "We left the light on."
+
+The ghost turns once, and curtsies to the sisters, and whispers something that Wren remembers the rest of her life.
+
+"Hold on to each other," she says. "The people who love us never really leave. They walk beside us, in songs, in the smell of cinnamon, in a light left on."
+
+The door closes softly, gold and warm. The sisters stand a long time on the path, then walk home hand in hand. They sleep soundly that night, and in the morning there is a small, glowing, silver button on Poppy's pillow, and a feeling that somebody lovely is looking after them both.`},
+ba:{x:`The three of them sing, Wren and Poppy and the little ghost, soft and clear, in the dark and the cold. And the song grows. Across the town, from the windows and the porches and the trees, other voices join in, very faint, very sweet. Voices of grandmothers and grandfathers, mothers, aunts, all the people who ever sang a child to sleep.
+
+A path of tiny golden lights glimmers into being on the pavement, winding up the hill to a yellow door. The sisters walk her to it, still singing. The door opens. And a warm, glowing family waits inside, laughing and crying and holding their arms out wide.
+
+The little ghost looks back at the sisters, bright as a lantern, and says, "Thank you for singing with me."`},
+bb:{x:`The ghost leads them. The humming guides her, like a thread in the dark, through the park, past the old fountain, to a huge oak tree at the end of a road, where a wooden swing hangs from a branch. She sits on it. It begins to move on its own.
+
+"I remember now," she says. "I wasn't lost, really. I was waiting here. I just needed someone to sit with me while I remembered."
+
+A yellow light opens behind the oak, a doorway of warm gold, and a whole family stands in it, smiling, calling her name. She hops off the swing and runs through the doorway, glowing, and turns once to wave at the two girls who walked her all the way.`}
+}}
+];
+
+var FACTS = [
+ "Thanksgiving in the United States falls on the fourth Thursday of November, a date Congress set in 1941.",
+ "Wild turkeys can fly in short bursts at up to about 55 miles per hour, and they can run around 25. The heavy farm kind mostly can't fly at all.",
+ "Only male turkeys gobble. Hens make clicks, clucks, and yelps instead.",
+ "A turkey's head can change color from red to white to blue depending on its mood.",
+ "Benjamin Franklin never proposed the turkey as the national bird, but in a 1784 letter to his daughter he grumbled about the bald eagle and called the turkey a much more respectable bird.",
+ "The Macy's Thanksgiving Day Parade started in 1924.",
+ "The official White House turkey pardon ceremony began in 1989 under President George H. W. Bush.",
+ "Cranberries are one of only a few fruits native to North America, along with blueberries and Concord grapes.",
+ "November 1st and 2nd are Dia de los Muertos, when families build altars and welcome back loved ones with marigolds and their favorite foods.",
+ "In the United States, clocks fall back one hour on the first Sunday of November, which gives everyone an extra hour of night.",
+ "Turkeys have excellent eyesight, with a field of view of about 270 degrees, but they don't see well in the dark.",
+ "The fleshy bit that hangs over a male turkey's beak is called a snood, and the flap under his chin is the wattle."
+];
+
+var JOKES = [
+ "Why did the turkey join the band? It had the drumsticks.",
+ "What do you call a turkey the day after Thanksgiving? Lucky.",
+ "Why did the turkey cross the road? To prove he wasn't chicken.",
+ "What is a turkey's favorite dessert? Peach gobbler.",
+ "Why do turkeys fly south for the winter? It's too far to walk.",
+ "Why did the pie go to the dentist? It needed a filling.",
+ "What sound does a turkey's phone make? Wobble wobble wobble."
+];
+
+var QS = [
+ {q:"What are you dressing up as for dinner this year?", r:"Oh, how lovely. I'm dressing up as you this year. I've been practicing your walk. Do you always lean a little to the left?"},
+ {q:"What is your favorite pie?", r:"A fine choice. I once traded a whole pie to a raccoon for a secret. I will not say what the secret was. It was mostly about socks."},
+ {q:"Have you ever heard a turkey gobble in the dark?", r:"Interesting. They always say that right before they gobble back. Gobble back next time. It's only polite."},
+ {q:"Do you sleep with your feet under the blanket, to protect them from the thing under the bed?", r:"Wise. The blanket is the oldest magic in the world. It has never once worked, but it is very comforting."},
+ {q:"Is your porch light on right now?", r:"Ah. That explains the moths. And the visitors in the hedges. Don't worry, they're only here for the light."},
+ {q:"Do you prefer stuffing or mashed potatoes?", r:"I prefer being stuffed. Don't judge. A good stuffing is like a hug for the soul."},
+ {q:"Quick, pick a number between one and thirteen.", r:"Hm. That is the number of seconds until nothing happens. ...Nothing. Happened. Did it? Gobble gobble."},
+ {q:"What's the strangest sound you ever heard at night?", r:"Ooh. I heard a sound like that once. It turned out to be my own thoughts, escaping through my left ear. They were very noisy."},
+ {q:"What are you thankful for tonight?", r:"Mm. I'm thankful for the dark, the quiet, and whoever left the porch light on. It wasn't me. I don't have hands."}
+];
+
+var DERANGED = [
+ "Your words have been fed to the jar of whispers under my porch. It gobbled. That means it liked them.",
+ "I once had a thought like that. It escaped through my left eye and has been living in the cranberry sauce ever since.",
+ "I'd answer, but I am busy counting my feathers. Four hundred and twelve. Four hundred and thirteen. Ugh. Now I've lost count. Thanks.",
+ "That's a lovely thing to say to a bird. Everyone else just walks past me.",
+ "Did you know gravy is just the leftover tears of the moon? I read it on a leaf.",
+ "I feel a strange joy. A wet little joy. Like a sock full of rain.",
+ "Nobody ever asks the turkey how he feels. I feel... burnt orange. Very, very burnt orange.",
+ "*the candle in my head flickers* I forgot what you said. Something with a mouth. Say it again but with more stuffing.",
+ "I would reply but a moth just landed on my thoughts. Hold still. Do not breathe. ...Okay. It's gone. Where were we?",
+ "Gobble gobble. Your words are so crunchy.",
+ "I have decided your question belongs to the moon. The moon says, ask again later.",
+ "Beep boop, turkey mode. Rebooting. Please hold.",
+ "Sorry, I was busy being stared at by a scarecrow. He never blinks. It's his whole personality.",
+ "My head is the size of a walnut and still I understood none of that. Delightful."
+];
+
+var INTRO = "Hello. I am the Turkey, and I know who you are. Gobble gobble. Happy November the first. Halloween was awesome. Welcome to my porch, traveler. I tell fourteen porch stories where YOU choose what happens. Say story, fact, joke, poem, or list. But first, a question. What are you dressing up as for dinner this year?";
+var HELP = "Try saying: story, fact, joke, poem, coloring, list, or a story name like mirror or lantern. You can also say story 3. During a story, tap one of the two choices, or type or say one or two. Tap the 🎤 to talk to me out loud.";
+
+var POEM_INTRO = "Very well. Here is Lenore, by Edgar Allan Poe.\n\n";
+var POEM = `Ah, broken is the golden bowl! the spirit flown forever!
+Let the bell toll!—a saintly soul floats on the Stygian river;
+And, Guy De Vere, hast thou no tear?—weep now or nevermore!
+See! on yon drear and rigid bier low lies thy love, Lenore!
+
+Come! let the burial rite be read—the funeral song be sung!—
+An anthem for the queenliest dead that ever died so young—
+A dirge for her the doubly dead in that she died so young.
+
+"Wretches! ye loved her for her wealth and hated her for her pride,
+And when she fell in feeble health, ye blessed her—that she died!
+How shall the ritual, then, be read?—the requiem how be sung
+By you—by yours, the evil eye,—by yours, the slanderous tongue
+That did to death the innocence that died, and died so young?"
+
+Peccavimus; but rave not thus! and let a Sabbath song
+Go up to God so solemnly the dead may feel no wrong!
+The sweet Lenore hath "gone before," with Hope, that flew beside,
+Leaving thee wild for the dear child that should have been thy bride—
+For her, the fair and debonair, that now so lowly lies,
+The life upon her yellow hair but not within her eyes—
+The life still there, upon her hair—the death upon her eyes.
+
+"Avaunt! avaunt! from fiends below, the indignant ghost is riven—
+From Hell unto a high estate far up within the Heaven—
+From grief and groan, to a golden throne, beside the King of Heaven:
+Let no bell toll, then,—lest her soul, amid its hallowed mirth,
+Should catch the note, as it doth float up from the damnèd Earth!
+And I!—to-night my heart is light!—no dirge will I upraise,
+But waft the angel on her flight with a Pæan of old days!"`;
+
+/* ---------- VOICE ---------- */
+var voiceOn = true, musicOn = true, ttsVoice = null;
+var synth = window.speechSynthesis;
+function pickVoice(){
+  if(!synth) return;
+  var v = synth.getVoices(), best = null, i;
+  for(i=0;i<v.length;i++){ if(/^en/i.test(v[i].lang) && /(daniel|alex|fred|david|male|mark|guy|google uk english male)/i.test(v[i].name)){best=v[i];break;} }
+  if(!best){ for(i=0;i<v.length;i++){ if(/^en/i.test(v[i].lang)){best=v[i];break;} } }
+  ttsVoice = best;
+}
+if(synth){ pickVoice(); synth.onvoiceschanged = pickVoice; }
+/* tracks everything the page says out loud so the mic never listens to it */
+var talkPending=0, quietUntil=0, spokenLog="", spokenAt=0, lastPendingChange=0;
+function trackUtt(u,text){
+  talkPending++; lastPendingChange=Date.now();
+  if(Date.now()-spokenAt>30000) spokenLog="";
+  spokenLog+=" "+(text||"").toLowerCase(); spokenAt=Date.now();
+  var done=function(){ talkPending=Math.max(0,talkPending-1); lastPendingChange=Date.now(); quietUntil=Date.now()+1400; if(talkPending===0) growlOn(false); };
+  u.onstart=function(){ growlOn(true); }; u.onend=done; u.onerror=done;
+}
+function talking(){
+  if(talkPending>0 && synth && !synth.speaking && Date.now()-lastPendingChange>3000) talkPending=0;
+  return talkPending>0 || !!(synth && synth.speaking) || Date.now()<quietUntil;
+}
+function isEcho(v){
+  if(Date.now()-spokenAt>25000) return false;
+  var words=v.toLowerCase().replace(/[^a-z' ]/g,' ').split(/\s+/).filter(Boolean);
+  if(words.length<4) return false;
+  var set={}; spokenLog.replace(/[^a-z' ]/g,' ').split(/\s+/).forEach(function(w){ if(w) set[w]=1; });
+  var hit=0; words.forEach(function(w){ if(set[w]) hit++; });
+  return hit/words.length>=0.85;
+}
+function micHush(){ if(typeof listening!=='undefined' && listening){ micAborted=true; try{ rec.abort(); }catch(e){} } }
+function speak(text, queue, pitch, rate){
+  if(!voiceOn || !synth) return;
+  try{
+    micHush();
+    if(!queue){ synth.cancel(); talkPending=0; }
+    var parts = text.replace(/\.\.\./g,", ").match(/[^.!?\n]+[.!?]*/g) || [text];
+    parts.forEach(function(p){
+      p = p.trim(); if(!p) return;
+      var u = new SpeechSynthesisUtterance(p);
+      if(ttsVoice) u.voice = ttsVoice;
+      u.pitch = pitch || 0.7; u.rate = rate || 0.85; u.volume = 1;
+      trackUtt(u,p);
+      synth.speak(u);
+    });
+  }catch(e){}
+}
+
+/* ---------- MUSIC + SOUND EFFECTS (generated in code) ---------- */
+var ac, master, bus, growlGain, whiteBuf, crackBuf, wobG, nextT=0, stepN=0, gi=1, lofiOn=false;
+var MUSIC_LEVEL=0.5, BPM=68;
+/* Fmaj7 > Em7 > Dm9 > G7 : warm, cozy, loops forever */
+var CHORDS=[{b:53,n:[57,60,64,67]},{b:52,n:[55,59,62,67]},{b:50,n:[57,60,64,65]},{b:55,n:[59,62,65,67]}];
+function mf(n){ return 440*Math.pow(2,(n-69)/12); }
+function tone(type,f,t,a,peak,d,det){
+  var o=ac.createOscillator(), g=ac.createGain();
+  o.type=type; o.frequency.value=f; if(det) o.detune.value=det;
+  if(wobG) wobG.connect(o.detune);
+  g.gain.setValueAtTime(0.0001,t); g.gain.linearRampToValueAtTime(peak,t+a); g.gain.exponentialRampToValueAtTime(0.0001,t+a+d);
+  o.connect(g); g.connect(bus); o.start(t); o.stop(t+a+d+0.05);
+}
+function noiseHit(t,dur,type,freq,q,vol){
+  var s=ac.createBufferSource(); s.buffer=whiteBuf;
+  var f=ac.createBiquadFilter(); f.type=type; f.frequency.value=freq; f.Q.value=q;
+  var g=ac.createGain(); g.gain.setValueAtTime(vol,t); g.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  s.connect(f); f.connect(g); g.connect(bus); s.start(t,Math.random()); s.stop(t+dur+0.02);
+}
+function kick(t){
+  var o=ac.createOscillator(), g=ac.createGain(); o.type='sine';
+  o.frequency.setValueAtTime(130,t); o.frequency.exponentialRampToValueAtTime(42,t+0.14);
+  g.gain.setValueAtTime(0.5,t); g.gain.exponentialRampToValueAtTime(0.0001,t+0.22);
+  o.connect(g); g.connect(bus); o.start(t); o.stop(t+0.25);
+}
+function snare(t){ noiseHit(t,0.16,'bandpass',1900,0.9,0.12); tone('triangle',185,t,0.002,0.05,0.09,0); }
+function chord(c,t,spb){
+  tone('sine',mf(c.b),t,0.02,0.2,spb*3.2,0);
+  for(var i=0;i<c.n.length;i++){
+    tone('sine',mf(c.n[i]),t+i*0.016,0.03,0.05,spb*3.4,-5);
+    tone('triangle',mf(c.n[i]),t+i*0.016,0.03,0.022,spb*2.6,6);
+  }
+}
+function pluck(f,t){ tone('triangle',f,t,0.004,0.085,0.75,0); tone('sine',f*2,t,0.004,0.025,0.25,0); }
+function twinkle(n,t){ var f=mf(n); tone('sine',f,t,0.01,0.03,2.0,0); tone('sine',f,t+0.34,0.01,0.014,1.6,0); }
+function sched(){
+  if(!ac) return;
+  if(ac.state!=='running'){ nextT=ac.currentTime+0.2; return; }
+  var spb=60/BPM;
+  while(nextT<ac.currentTime+1.2){
+    var bar=Math.floor(stepN/8)%4, s8=stepN%8, c=CHORDS[bar];
+    var t=nextT+((s8%2)?spb*0.09:0)+Math.random()*0.012;
+    if(s8===0) chord(c,t,spb);
+    if(s8===0||s8===4) kick(t);
+    if(s8===2||s8===6) snare(t+0.025);
+    noiseHit(t,0.045,'highpass',7000,0.7,(s8%2?0.025:0.045));
+    if(s8!==0 && Math.random()<0.42){ gi=Math.max(0,Math.min(3,gi+(Math.random()<0.5?-1:1))); pluck(mf(c.n[gi]+12),t); }
+    if(s8===0 && Math.random()<0.55) twinkle(c.n[Math.floor(Math.random()*4)]+24,t+spb*0.5);
+    stepN++; nextT+=spb/2;
+  }
+}
+function distCurve(k){
+  var n=1024,c=new Float32Array(n),i,x;
+  for(i=0;i<n;i++){ x=i*2/n-1; c[i]=((3+k)*x*20*(Math.PI/180))/(Math.PI+k*Math.abs(x)); }
+  return c;
+}
+/* dark, resonant, gritty warble that sits UNDER the phone's own TTS voice */
+function buildGrowl(){
+  var mix=ac.createGain(); mix.gain.value=0.55;
+  var vib=ac.createOscillator(); vib.frequency.value=5.4;
+  var vibG=ac.createGain(); vibG.gain.value=40; vib.connect(vibG); vib.start();
+  [[98,'sawtooth'],[147,'square'],[196.5,'sawtooth'],[49,'sawtooth']].forEach(function(p){
+    var o=ac.createOscillator(); o.type=p[1]; o.frequency.value=p[0]; o.detune.value=Math.random()*16-8;
+    vibG.connect(o.detune); o.connect(mix); o.start();
+  });
+  var ns=ac.createBufferSource(); ns.buffer=whiteBuf; ns.loop=true;
+  var nbp=ac.createBiquadFilter(); nbp.type='bandpass'; nbp.frequency.value=900; nbp.Q.value=1.2;
+  var ng=ac.createGain(); ng.gain.value=0.25; ns.connect(nbp); nbp.connect(ng); ng.connect(mix); ns.start();
+  var ws=ac.createWaveShaper(); ws.curve=distCurve(60); ws.oversample='2x';
+  var lp=ac.createBiquadFilter(); lp.type='lowpass'; lp.frequency.value=1300; lp.Q.value=5;
+  var pk=ac.createBiquadFilter(); pk.type='peaking'; pk.frequency.value=520; pk.gain.value=8; pk.Q.value=1.4;
+  var tg=ac.createGain(); tg.gain.value=0.7;
+  var trem=ac.createOscillator(); trem.frequency.value=7.2; var tremG=ac.createGain(); tremG.gain.value=0.3;
+  trem.connect(tremG); tremG.connect(tg.gain); trem.start();
+  growlGain=ac.createGain(); growlGain.gain.value=0;
+  mix.connect(ws); ws.connect(lp); lp.connect(pk); pk.connect(tg); tg.connect(growlGain); growlGain.connect(ac.destination);
+}
+function growlOn(on){
+  if(!growlGain||!ac) return;
+  try{ growlGain.gain.setTargetAtTime(on?0.13:0,ac.currentTime,on?0.06:0.2); }catch(e){}
+}
+function startMusic(){
+  try{
+    if(ac){ if(ac.state==='suspended') ac.resume(); return; }
+    var AC=window.AudioContext||window.webkitAudioContext; if(!AC) return;
+    ac=new AC();
+    master=ac.createGain(); master.gain.value=musicOn?MUSIC_LEVEL:0; master.connect(ac.destination);
+    var warm=ac.createBiquadFilter(); warm.type='lowpass'; warm.frequency.value=2600; warm.Q.value=0.5;
+    bus=ac.createGain(); bus.connect(warm); warm.connect(master);
+    var sr=ac.sampleRate, i, d;
+    whiteBuf=ac.createBuffer(1,sr*2,sr); d=whiteBuf.getChannelData(0); for(i=0;i<d.length;i++) d[i]=Math.random()*2-1;
+    crackBuf=ac.createBuffer(1,sr*3,sr); d=crackBuf.getChannelData(0);
+    for(i=0;i<d.length;i++) d[i]=Math.random()<0.0006?(Math.random()*2-1)*0.6:(Math.random()*2-1)*0.012;
+    var cs=ac.createBufferSource(); cs.buffer=crackBuf; cs.loop=true;
+    var chp=ac.createBiquadFilter(); chp.type='highpass'; chp.frequency.value=1200;
+    var cg=ac.createGain(); cg.gain.value=0.25; cs.connect(chp); chp.connect(cg); cg.connect(master); cs.start();
+    var wl=ac.createOscillator(); wl.frequency.value=0.33; wobG=ac.createGain(); wobG.gain.value=9; wl.connect(wobG); wl.start();
+    try{ buildGrowl(); }catch(e){}
+    nextT=ac.currentTime+0.3; setInterval(sched,120);
+    setInterval(function(){ if(growlGain && !(synth && synth.speaking)) growlOn(false); },1500);
+  }catch(e){}
+}
+function setMusic(on){
+  musicOn=on; document.getElementById('musicBtn').style.opacity=on?1:.35;
+  if(master) master.gain.setTargetAtTime(on?MUSIC_LEVEL:0, ac.currentTime, .2);
+}
+function soundOK(){ return ac && (musicOn || voiceOn); }
+function shriekSound(){
+  if(!soundOK()) return;
+  quietUntil=Date.now()+3200; micHush();
+  try{
+    var t=ac.currentTime, g=ac.createGain();
+    g.gain.setValueAtTime(0,t); g.gain.linearRampToValueAtTime(.45,t+.05); g.gain.exponentialRampToValueAtTime(.001,t+1.8);
+    g.connect(ac.destination);
+    [1,1.5,2.01].forEach(function(m){
+      var o=ac.createOscillator(); o.type='sawtooth';
+      o.frequency.setValueAtTime(600*m,t); o.frequency.exponentialRampToValueAtTime(1900*m,t+.5); o.frequency.exponentialRampToValueAtTime(900*m,t+1.7);
+      var v=ac.createOscillator(); v.frequency.value=22; var vg=ac.createGain(); vg.gain.value=90*m; v.connect(vg); vg.connect(o.frequency); v.start(t); v.stop(t+1.8);
+      o.connect(g); o.start(t); o.stop(t+1.8);
+    });
+    var len=ac.sampleRate*1.6, buf=ac.createBuffer(1,len,ac.sampleRate), d=buf.getChannelData(0);
+    for(var i=0;i<len;i++) d[i]=(Math.random()*2-1)*(1-i/len);
+    var n=ac.createBufferSource(); n.buffer=buf; var ng=ac.createGain(); ng.gain.value=.25; n.connect(ng); ng.connect(g); n.start(t);
+  }catch(e){}
+}
+function knockSound(){
+  if(!soundOK()) return;
+  quietUntil=Date.now()+2200; micHush();
+  try{
+    [0,.35,.7].forEach(function(dt){
+      var t=ac.currentTime+dt, o=ac.createOscillator(), g=ac.createGain();
+      o.type='sine'; o.frequency.setValueAtTime(140,t); o.frequency.exponentialRampToValueAtTime(50,t+.12);
+      g.gain.setValueAtTime(.8,t); g.gain.exponentialRampToValueAtTime(.001,t+.18);
+      o.connect(g); g.connect(ac.destination); o.start(t); o.stop(t+.2);
+    });
+  }catch(e){}
+}
+
+/* ---------- CHAT CORE ---------- */
+var log=document.getElementById('log'), q=document.getElementById('q');
+var factIdx=Math.floor(Math.random()*FACTS.length), jokeIdx=0;
+var seen={}, cur=null, pendingQ=null, lastChoices=null, started=false;
+
+function add(text,who,cls){
+  var d=document.createElement('div'); d.className='m '+who+(cls?' '+cls:''); d.textContent=text;
+  log.appendChild(d); log.scrollTop=log.scrollHeight; return d;
+}
+function say(text,speakIt){ add(text,'bot'); if(speakIt!==false) speak(text); }
+function ask(){ var o=QS[Math.floor(Math.random()*QS.length)]; pendingQ=o; return o.q; }
+function maybeAsk(p){ return Math.random()<p ? "\n\n"+ask() : ""; }
+
+function showNode(i,id){
+  var s=STORIES[i], node=s.n[id];
+  var head = id==="" ? "Story "+(i+1)+": "+s.t+".\n\n" : "";
+  if(node.A){
+    cur={s:i,id:id};
+    add(head+node.x,'bot');
+    speak(head+node.x+" ... Option one: "+node.A+". ... Option two: "+node.B+".");
+    var box=document.createElement('div'); box.className='choices';
+    [node.A,node.B].forEach(function(label,idx){
+      var b=document.createElement('button'); b.type='button'; b.textContent=(idx+1)+". "+label;
+      b.onclick=function(){ choose(idx); };
+      box.appendChild(b);
+    });
+    log.appendChild(box); log.scrollTop=log.scrollHeight; lastChoices=box;
+  } else {
+    cur=null; seen[i]=true; lastChoices=null;
+    var end=head+node.x+"\n\n— THE END —\n\nSay story to try another. Choose differently and everything changes.";
+    add(end,'bot'); speak(node.x+" ... The end. Say story to try another.");
+  }
+}
+function choose(idx){
+  if(!cur) return;
+  var node=STORIES[cur.s].n[cur.id];
+  if(lastChoices){ var bs=lastChoices.getElementsByTagName('button'); for(var i=0;i<bs.length;i++) bs[i].disabled=true; }
+  add((idx+1)+". "+(idx?node.B:node.A),'me');
+  var si=cur.s, nid=cur.id+(idx?'b':'a');
+  setTimeout(function(){ showNode(si,nid); },400);
+}
+function startStory(i){ pendingQ=null; showNode(i,""); }
+function randomStory(){
+  var pool=[], i;
+  for(i=0;i<STORIES.length;i++) if(!seen[i]) pool.push(i);
+  if(!pool.length){ seen={}; for(i=0;i<STORIES.length;i++) pool.push(i); }
+  startStory(pool[Math.floor(Math.random()*pool.length)]);
+}
+function nextFact(){ say("November fact: "+FACTS[factIdx%FACTS.length]+maybeAsk(.4)); factIdx++; }
+function has(t,re){ return re.test(t); }
+
+function reply(input){
+  var t=input.toLowerCase().trim();
+  var isCmd=has(t,/\b(story|stories|fact|facts|list|joke|jokes|stop|quiet|help|poem|poe|lenore|leonore|recite|color|colour|coloring|colouring|crayon|crayons|clark|grid)\b/);
+
+  if(has(t,/\b(stop|quiet|shut up|silence|hush)\b/)){ if(synth) synth.cancel(); cur=null; return say("As you wish. Silence... for now.",false); }
+
+  if(cur && !isCmd){
+    var c=t.replace(/[.,!?]/g,"");
+    for(var pass=0;pass<3;pass++) c=c.replace(/^(option|number|choice|pick|choose|i choose|i pick|i'll take|i will take|take|go with|let's go with|lets go with|the|please)\s+/,"");
+    if(has(c,/^(1|one|first|a|left)\b/)) return choose(0);
+    if(has(c,/^(2|two|to|too|second|b|right)\b/)) return choose(1);
+    return say("The story waits for you. Choose 1 or 2, or tap a button above. Time is a very flimsy thing here.");
+  }
+
+  if(pendingQ && !isCmd){ var qq=pendingQ; pendingQ=null; return say(qq.r+maybeAsk(.25)); }
+
+  if(has(t,/\b(poem|poe|lenore|leonore|recite|poetry)\b/)){ pendingQ=null; return say(POEM_INTRO+POEM+"\n\n...Lovely, isn't it? So cheerful."); }
+
+  if(has(t,/\b(clark|grid)\b/)){ pendingQ=null; say("Here is the word search grid. CLARK sits in the exact center, in big capital letters. Tap a color, then tap squares to highlight them."); openColoring('search'); return; }
+  if(has(t,/\b(colou?r|colou?ring|crayons?|buckles?|shoes?)\b/)){ pendingQ=null; say("Time to color! Tap a color, then tap a buckle or a shoe. The pilgrim has so many buckles. Captain Gobble is on the other page."); openColoring(); return; }
+
+  var num=t.match(/\b(1[0-4]|[1-9])\b/);
+  if(has(t,/\b(list|menu|stories)\b/) && !has(t,/\btell\b/)){
+    var l=[]; for(var j=0;j<STORIES.length;j++) l.push((j+1)+". "+STORIES[j].t);
+    return say("Fourteen tales wait in the dark:\n"+l.join("\n")+"\n\nSay a number or a name.");
+  }
+  if(num && (has(t,/\b(story|tale|number|tell|read)\b/) || t.length<4)) return startStory(parseInt(num[1],10)-1);
+  for(var i=0;i<STORIES.length;i++){
+    for(var k=0;k<STORIES[i].k.length;k++){
+      if(new RegExp("\\b"+STORIES[i].k[k]+"\\b").test(t)) return startStory(i);
+    }
+  }
+  if(has(t,/\b(fact|facts|history|origin|origins|trivia|learn|know)\b/)) return nextFact();
+  if(has(t,/\b(joke|jokes|funny)\b/)) return say(JOKES[jokeIdx++%JOKES.length]+" Heh heh heh.");
+  if(has(t,/\b(story|scary|spooky|creepy|tale|tell|another|more|next|read)\b/)) return randomStory();
+  if(has(t,/\b(hi|hello|hey|sup|yo)\b/)) return say("Hello, little ghoul. Want a story, a fact, or a joke?"+maybeAsk(.5));
+  if(has(t,/\b(who|name)\b/)) return say("I am the Turkey. I stand on your porch every November. You never noticed me move, did you?");
+  if(has(t,/\b(help|what can)\b/)) return say(HELP);
+  if(has(t,/\b(candy|treat|treats|pie|pies|dessert|stuffing)\b/)) return say("Sweet things are wonderful. But always check what is inside the pie... gobble gobble. Sometimes it's more pie."+maybeAsk(.4));
+  if(has(t,/\b(thanks|thank)\b/)) return say("You are welcome, traveler. Sleep well. If you can.");
+  if(has(t,/\b(lol|haha|hehe|lmao)\b/)) return say("I do not know why you are laughing but I am laughing too. Heh heh heh heh heh. ...Heh.");
+  if(has(t,/\b(bored|boring)\b/)) return say("Bored? On Halloween? Say story. Or let me stare at you in silence for a minute. I'm very good at that.");
+  if(has(t,/\b(scared|afraid|scary)\b/)) return say("Good. Fear is just excitement wearing a bedsheet.");
+  say(DERANGED[Math.floor(Math.random()*DERANGED.length)]+maybeAsk(.35));
+}
+
+function submitMsg(){
+  var v=q.value.trim(); if(!v) return;
+  noteActive(); add(v,'me'); q.value='';
+  setTimeout(function(){ reply(v); },350);
+}
+document.getElementById('f').addEventListener('submit',function(e){ e.preventDefault(); submitMsg(); });
+document.getElementById('send').addEventListener('click',function(e){ e.preventDefault(); submitMsg(); });
+
+[["📖 Story","story"],["🍂 November fact","fact"],["🎭 Joke","joke"],["🎨 Coloring sheet","coloring"],["🪦 Poe poem","poem"],["📜 List stories","list"],["🤫 Quiet","stop"]].forEach(function(c){
+  var b=document.createElement('button'); b.type='button'; b.textContent=c[0];
+  b.onclick=function(){ noteActive(); add(c[0].replace(/^\S+\s/,''),'me'); setTimeout(function(){ reply(c[1]); },300); };
+  document.getElementById('chips').appendChild(b);
+});
+
+document.getElementById('musicBtn').onclick=function(){ startMusic(); setMusic(!musicOn); };
+document.getElementById('voiceBtn').onclick=function(e){
+  voiceOn=!voiceOn; e.target.textContent=voiceOn?'🔊':'🔇'; e.target.style.opacity=voiceOn?1:.35;
+  if(!voiceOn && synth) synth.cancel();
+};
+document.getElementById('enter').onclick=function(){
+  document.getElementById('gate').style.display='none';
+  startMusic(); started=true; noteActive();
+  setTimeout(function(){ pendingQ=QS[0]; say(INTRO); },600);
+};
+
+/* =====================================================
+   HAUNTED IDLE BEHAVIOR
+   1 min: hypnosis   3 min: shriek, then random haunting
+   4 min: creepy doll (never stops, even with sound off)
+   ===================================================== */
+var lastActive=Date.now(), stage=0, nextHaunt=0, dollMode=false, dollN=0;
+function noteActive(){
+  lastActive=Date.now();
+  if(stage>0){ stage=0; }
+  document.getElementById('spiral').className='';
+  document.getElementById('dark').className='';
+}
+['pointerdown','keydown','touchstart'].forEach(function(ev){ document.addEventListener(ev,noteActive,{passive:true}); });
+
+function pulse(cls,ms){ document.body.classList.add(cls); setTimeout(function(){ document.body.classList.remove(cls); },ms); }
+
+function hypnosis(){
+  var txt="Heeeey... you've been sitting so very still. Look into my little black eyes... deeper... deeper... Your eyelids are getting heavy, like cold gravy... When I count to three you will crave mashed potatoes and forget what day it is... One... two... oh, you're still here. Good. That means it's working.";
+  add(txt,'bot'); speak(txt,true,0.4,0.7);
+  var sp=document.getElementById('spiral'); sp.className='on';
+  setTimeout(function(){ sp.className=''; },9000);
+}
+function shriek(){
+  add("AAAAAAAIIIIIIIEEEEEEEEE!!!",'bot','shriek');
+  shriekSound();
+  if(voiceOn && synth){ try{ micHush(); var u=new SpeechSynthesisUtterance("Aaaaaaaiiiiieeeeeee!"); u.pitch=2; u.rate=1.5; trackUtt(u,""); synth.speak(u);}catch(e){} }
+  pulse('shake',1500);
+  var fl=document.getElementById('flash'); fl.className='on'; setTimeout(function(){ fl.className=''; },1100);
+  setTimeout(function(){ if(stage>=2){ var t="Sorry. I get like that when nobody talks to me. ...Are you still alive over there?"; add(t,'bot'); speak(t,true);} },3500);
+}
+var HAUNTS=[
+ function(){ pulse('flicker',2500); },
+ function(){ var d=document.getElementById('dark'); d.className='on'; setTimeout(function(){ d.className=''; },3000); },
+ function(){ var m=add("Turkey is typing...",'bot'); setTimeout(function(){ m.textContent="...never mind."; },4500); },
+ function(){ var h=document.getElementById('title'); h.textContent="BEHIND YOU"; setTimeout(function(){ h.textContent="TURKEY'S PORCH"+(dollMode?" 🪆":""); },3500); },
+ function(){ var t="*knock knock knock*"; add(t,'bot'); knockSound(); },
+ function(){ var t="Hee hee hee... I can hear you breathing. It's very rude to do that without asking."; add(t,'bot'); speak(t,true); },
+ function(){ var t="Did you hear that? Something just walked past the window. I think it was wearing a very small hat."; add(t,'bot'); speak(t,true); pendingQ={r:"Hm. Yes. That is what everyone says. Heh."}; },
+ function(){ var t="Quick question. Who turned on the light in the hallway? Not me. I don't have hands."; add(t,'bot'); speak(t,true); pendingQ={r:"Mmm. Suspicious. Very suspicious. I'll be watching the hallway."}; },
+ function(){ var t=ask(); add(t,'bot'); speak(t,true); },
+ function(){ var t="If you could ask one ghost one question, what would you ask? I'd ask mine to stop reading my diary."; add(t,'bot'); speak(t,true); pendingQ={r:"Excellent question. The ghost says he'll think about it. He's very slow. He's very dead."}; }
+];
+function haunt(){ HAUNTS[Math.floor(Math.random()*HAUNTS.length)](); }
+
+var DOLL=[
+ "By the way. Did you know there's a doll in the attic of this page? Her name is Margaret. She doesn't blink. That's her whole personality.",
+ "Margaret says hello. She has one glass eye and one button eye and she's very proud of the button.",
+ "She's sitting in the rocking chair by the window. Nobody pushed it. It's been rocking since 1954.",
+ "Her mouth is painted into a smile. It's a little chipped. In the dark it looks like she's saying something.",
+ "Margaret has moved closer to the screen since I last mentioned her. Just a few inches. Dolls do that.",
+ "She wants to tell you a secret. It's not a good secret. It's mostly about hair.",
+ "Margaret likes you. She hums when you're not looking. It's a lullaby with all the words taken out.",
+ "I can't make her stop. Nobody can. If you want her quiet, you have to close the whole thing. Go on. Close it. She'll still be here next time."
+];
+var DOLLX=[
+ "Margaret blinked. I swear she blinked. Oh no. She's waving.",
+ "Her tiny dress is soaked, and it is not raining.",
+ "She says the button eye can see you better than the glass one. She says it's closer to the heart.",
+ "Margaret is humming again. It's the song from the music box. The one with the missing note. Hmmm... hm hm.",
+ "She asked me to tell you she's not mad. Dolls are never mad. Only patient.",
+ "Margaret would like to play. She only knows one game. It's called stay very still."
+];
+function dollSay(){
+  var t = dollN<DOLL.length ? DOLL[dollN] : DOLLX[Math.floor(Math.random()*DOLLX.length)];
+  dollN++;
+  add(t,'bot','doll');
+  if(voiceOn) speak(t,true,0.9,0.75);
+  setTimeout(dollSay, 20000+Math.random()*25000);
+}
+function startDoll(){
+  dollMode=true;
+  document.getElementById('title').textContent="TURKEY'S PORCH 🪆";
+  dollSay();
+}
+
+setInterval(function(){
+  if(!started) return;
+  if(synth && synth.speaking && stage<2){ lastActive=Date.now(); return; }
+  var now=Date.now(), idle=(now-lastActive)/1000;
+  if(idle>60 && stage<1){ stage=1; hypnosis(); }
+  if(idle>180 && stage<2){ stage=2; shriek(); nextHaunt=now+25000; }
+  if(stage>=2 && now>nextHaunt){ haunt(); nextHaunt=now+20000+Math.random()*25000; }
+  if(idle>240 && !dollMode){ startDoll(); }
+},2000);
+
+/* =====================================================
+   VOICE INPUT (microphone). Tap the mic: he listens, you talk,
+   he answers out loud, then listens again. Tap the mic while he
+   is talking to make him stop and listen. Tap again to turn off.
+   ===================================================== */
+var SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+var micBtn=document.getElementById('mic'), micOn=false, listening=false, rec=null, micAborted=false, micHinted=false;
+function speaking(){ return talking(); }
+function duck(on){ try{ if(master) master.gain.setTargetAtTime(on?0.05:(musicOn?MUSIC_LEVEL:0), ac.currentTime, 0.1); }catch(e){} }
+function setMicUI(){ micBtn.classList.toggle('armed',micOn); if(!micOn){ micBtn.classList.remove('live'); q.placeholder="Talk to the Turkey..."; } }
+function startListen(){
+  if(!SR || !micOn || listening || speaking() || !started) return;
+  try{
+    rec=new SR(); rec.lang='en-US'; rec.interimResults=true; rec.continuous=false; rec.maxAlternatives=1;
+    var lastTxt='';
+    micAborted=false;
+    rec.onstart=function(){ listening=true; micBtn.classList.add('live'); q.placeholder="Listening... speak now"; duck(true); };
+    rec.onresult=function(e){
+      if(talking()){ lastTxt=''; q.value=''; micAborted=true; try{ rec.abort(); }catch(err){} return; }
+      var txt='';
+      for(var i=0;i<e.results.length;i++) txt+=e.results[i][0].transcript;
+      lastTxt=txt; q.value=txt;
+    };
+    rec.onerror=function(e){
+      if(e.error==='not-allowed' || e.error==='service-not-allowed'){
+        micOn=false; setMicUI();
+        add("I cannot hear you. The microphone is blocked. Allow microphone access for this page in your browser settings, then tap the mic again.",'bot');
+      }
+    };
+    rec.onend=function(){
+      listening=false; micBtn.classList.remove('live'); duck(false);
+      if(micOn) q.placeholder="Talk to the Turkey...";
+      var v=lastTxt.trim();
+      if(!micAborted && v && !talking() && !isEcho(v)){ q.value=v; submitMsg(); } else { q.value=''; }
+    };
+    rec.start();
+  }catch(e){ listening=false; }
+}
+micBtn.addEventListener('click',function(){
+  noteActive();
+  if(!SR){
+    add("Your browser can't listen to voices. Try Chrome on Android or Safari on iPhone, on the https link.",'bot');
+    return;
+  }
+  if(!micOn && !micHinted){
+    micHinted=true;
+    add("🎤 Voice chat is on. Just talk to me. I'll listen after I finish speaking. Tap the mic while I'm talking to make me stop and listen, or tap it again to turn the mic off.",'bot');
+  }
+  if(speaking()){ try{ synth.cancel(); }catch(e){} talkPending=0; quietUntil=Date.now()+500; micOn=true; setMicUI(); return; }
+  micOn=!micOn; setMicUI();
+  if(!micOn){ micAborted=true; try{ rec && rec.abort(); }catch(e){} }
+  else startListen();
+});
+/* keeps the mic from hearing his own voice: pause while he talks, resume after */
+setInterval(function(){
+  if(!SR || !started) return;
+  if(micOn && listening && speaking()){ micAborted=true; try{ rec.abort(); }catch(e){} }
+  else if(micOn && !listening && !speaking()){ startListen(); }
+},600);
+
+/* =====================================================
+   COLORING SHEETS: tap a color, tap a shape to fill it
+   ===================================================== */
+var COLORS=["#c0392b","#e0641f","#f2b84b","#7cb342","#2e7d32","#1e88e5","#5e35b1","#ec7fb0","#6d4c41","#212121","#9e9e9e","#ffffff"];
+var PAGES={
+ pilgrim:`<rect class="f" x="0" y="0" width="300" height="400"/>
+  <path class="f" d="M106 168 L194 168 L212 292 L88 292 Z"/>
+  <path class="f" d="M106 170 L66 250 L88 264 L120 198 Z"/>
+  <path class="f" d="M194 170 L234 250 L212 264 L180 198 Z"/>
+  <rect class="f" x="94" y="238" width="112" height="14"/>
+  <rect class="f" x="136" y="233" width="28" height="24" rx="3"/>
+  <circle class="f" cx="76" cy="258" r="12"/><circle class="f" cx="224" cy="258" r="12"/>
+  <rect class="f" x="112" y="292" width="28" height="48"/><rect class="f" x="160" y="292" width="28" height="48"/>
+  <path class="f" d="M98 340 L142 340 L142 366 L84 366 Q82 348 98 340 Z"/>
+  <path class="f" d="M158 340 L202 340 Q218 348 216 366 L158 366 Z"/>
+  <rect class="f" x="112" y="347" width="20" height="14" rx="2"/><rect class="f" x="168" y="347" width="20" height="14" rx="2"/>
+  <path class="f" d="M112 162 L150 190 L188 162 L176 150 L150 170 L124 150 Z"/>
+  <circle class="f" cx="150" cy="132" r="32"/>
+  <circle class="x" cx="139" cy="126" r="3" fill="#222" stroke="none"/><circle class="x" cx="161" cy="126" r="3" fill="#222" stroke="none"/>
+  <path class="x" d="M138 142 Q150 154 162 142" fill="none" stroke="#222" stroke-width="2.5" stroke-linecap="round"/>
+  <path class="f" d="M105 28 L195 28 L205 92 L95 92 Z"/>
+  <ellipse class="f" cx="150" cy="94" rx="78" ry="13"/>
+  <path class="f" d="M98 78 L202 78 L205 92 L95 92 Z"/>
+  <rect class="f" x="136" y="76" width="28" height="17" rx="2"/>`,
+ hero:`<rect class="f" x="0" y="0" width="300" height="400"/>
+  <ellipse class="f" cx="150" cy="95" rx="22" ry="52" transform="rotate(-60 150 190)"/>
+  <ellipse class="f" cx="150" cy="95" rx="22" ry="52" transform="rotate(-30 150 190)"/>
+  <ellipse class="f" cx="150" cy="95" rx="22" ry="52" transform="rotate(30 150 190)"/>
+  <ellipse class="f" cx="150" cy="95" rx="22" ry="52" transform="rotate(60 150 190)"/>
+  <ellipse class="f" cx="150" cy="95" rx="22" ry="52"/>
+  <path class="f" d="M70 140 Q40 260 56 372 L244 372 Q260 260 230 140 Z"/>
+  <ellipse class="f" cx="150" cy="232" rx="48" ry="58"/>
+  <path class="f" d="M150 195 L158 217 L182 218 L163 232 L170 255 L150 242 L130 255 L137 232 L118 218 L142 217 Z"/>
+  <path class="f" d="M104 215 Q70 230 62 270 L84 272 Q92 248 112 240 Z"/>
+  <path class="f" d="M196 215 Q230 230 238 270 L216 272 Q208 248 188 240 Z"/>
+  <rect class="f" x="125" y="282" width="14" height="40"/><rect class="f" x="161" y="282" width="14" height="40"/>
+  <path class="f" d="M114 322 L142 322 L142 350 L100 350 Q102 330 114 322 Z"/>
+  <path class="f" d="M158 322 L186 322 Q198 330 200 350 L158 350 Z"/>
+  <rect class="f" x="121" y="329" width="16" height="11" rx="2"/><rect class="f" x="163" y="329" width="16" height="11" rx="2"/>
+  <circle class="f" cx="150" cy="160" r="28"/>
+  <path class="f" d="M120 152 Q150 138 180 152 L178 168 Q150 160 122 168 Z"/>
+  <circle class="x" cx="138" cy="158" r="3.5" fill="#fff" stroke="none"/><circle class="x" cx="162" cy="158" r="3.5" fill="#fff" stroke="none"/>
+  <path class="f" d="M143 172 L157 172 L150 187 Z"/>
+  <ellipse class="f" cx="150" cy="198" rx="5" ry="9"/>`
+};
+function buildSearch(){
+  var out='<rect class="f" x="0" y="0" width="300" height="400"/>';
+  out+='<text class="x" x="150" y="36" text-anchor="middle" font-size="18" font-weight="bold" fill="#b4501b" stroke="none" font-family="Georgia,serif">THE WORD SEARCH</text>';
+  var seed=7, L='ABDEFGHIJMNOPQSTUVWXYZ', rows=11, cols=11, cs=24, ox=18, oy=58, r, c, ch, big, tx, ty;
+  var word='CLARK';
+  for(r=0;r<rows;r++){
+    for(c=0;c<cols;c++){
+      big=(r===5 && c>=3 && c<=7);
+      seed=(seed*1103515245+12345)%2147483648;
+      ch=big?word.charAt(c-3):L.charAt(Math.floor(seed/65536)%L.length);
+      out+='<rect class="f" x="'+(ox+c*cs)+'" y="'+(oy+r*cs)+'" width="'+cs+'" height="'+cs+'" style="stroke-width:1"/>';
+      tx=ox+c*cs+cs/2; ty=oy+r*cs+(big?cs*0.8:cs*0.69);
+      out+='<text class="x" x="'+tx+'" y="'+ty+'" text-anchor="middle" font-family="Georgia,serif" stroke="none" '+(big?'font-size="23" font-weight="bold" fill="#b3261e"':'font-size="13" fill="#3b2a22"')+'>'+ch+'</text>';
+    }
+  }
+  out+='<text class="x" x="150" y="352" text-anchor="middle" font-size="11" fill="#6a5040" stroke="none" font-family="Georgia,serif">Tap squares to circle words. CLARK is in the exact center.</text>';
+  return out;
+}
+PAGES.search=buildSearch();
+var curPage='pilgrim', curColor=COLORS[0], palBuilt=false;
+function buildPalette(){
+  if(palBuilt) return; palBuilt=true;
+  var pal=document.getElementById('cPal');
+  COLORS.forEach(function(c,i){
+    var b=document.createElement('button'); b.type='button'; b.className='sw'+(i===0?' on':''); b.style.background=c; b.setAttribute('aria-label','color '+(i+1));
+    b.onclick=function(){ curColor=c; var all=pal.children; for(var k=0;k<all.length;k++) all[k].className='sw'; b.className='sw on'; };
+    pal.appendChild(b);
+  });
+}
+function loadPage(k){
+  curPage=k;
+  document.getElementById('pgPilgrim').className=(k==='pilgrim')?'on':'';
+  document.getElementById('pgHero').className=(k==='hero')?'on':'';
+  document.getElementById('pgSearch').className=(k==='search')?'on':'';
+  var st=document.getElementById('cStage');
+  st.innerHTML='<svg id="cSvg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 400">'+PAGES[k]+'</svg>';
+  var f=st.getElementsByClassName('f');
+  for(var i=0;i<f.length;i++){ (function(el){ el.addEventListener('click',function(){ el.style.fill=curColor; }); })(f[i]); }
+}
+function openColoring(p){
+  if(p) curPage=p;
+  buildPalette();
+  document.getElementById('colorModal').style.display='flex';
+  loadPage(curPage);
+}
+function savePic(){
+  try{
+    var clone=document.getElementById('cSvg').cloneNode(true);
+    clone.setAttribute('width','900'); clone.setAttribute('height','1200');
+    var st=document.createElementNS('http://www.w3.org/2000/svg','style');
+    st.textContent='.f{stroke:#2a1a14;stroke-width:2.5;fill:#fff}';
+    clone.insertBefore(st,clone.firstChild);
+    var xml=new XMLSerializer().serializeToString(clone);
+    var img=new Image();
+    img.onload=function(){
+      var c=document.createElement('canvas'); c.width=900; c.height=1200;
+      c.getContext('2d').drawImage(img,0,0);
+      c.toBlob(function(b){ var a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='my-coloring.png'; document.body.appendChild(a); a.click(); a.remove(); });
+    };
+    img.src='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(xml);
+  }catch(e){}
+}
+document.getElementById('pgPilgrim').onclick=function(){ loadPage('pilgrim'); };
+document.getElementById('pgHero').onclick=function(){ loadPage('hero'); };
+document.getElementById('pgSearch').onclick=function(){ loadPage('search'); };
+document.getElementById('cClose').onclick=function(){ document.getElementById('colorModal').style.display='none'; };
+document.getElementById('cClear').onclick=function(){ loadPage(curPage); };
+document.getElementById('cSave').onclick=savePic;
+</script>
+</body>
+</html>
